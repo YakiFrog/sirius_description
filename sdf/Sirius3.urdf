@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="Sirius3">
+    <!-- 新しいダミーベースリンク -->
+    <link name="base_footprint">
+        <!-- 空の慣性要素を持たないリンク -->
+    </link>
+    
+    <link name="base_link">
+        <inertial>
+            <origin xyz="0.0002947164165949175 0.09943035225547465 0.3230235286090795" rpy="0.0 0.0 0.0" />
+            <mass value="55.92590679361776" />
+            <inertia ixx="2.8808637737854452" iyy="2.459771630191444" izz="2.1448545974410616" ixy="0.000982314201767401" iyz="0.26295068207750116" ixz="-0.0034301184728964904" />
+        </inertial>
+        <visual name="base_link_visual">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="file:///home/kotantu-desktop/ros2_ws/src/urdf_viewer/models/Sirius3/meshes/Sirius3-body-v2.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="base_blue">
+                <color rgba="0.1 0.3 0.6 1.0"/>
+            </material>
+        </visual>
+        <collision name="base_link_collision">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="file:///home/kotantu-desktop/ros2_ws/src/urdf_viewer/models/Sirius3/meshes/Sirius3-body-v2.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    
+    <!-- フットプリントとベースを接続するジョイント -->
+    <joint name="footprint_to_base" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    
+    <link name="right_wheel">
+        <inertial>
+            <origin xyz="-0.00012199495468983912 0.00016034230214501233 0.02153545478825997" rpy="0.0 -0.0 0.0" />
+            <mass value="26.680591288269447" />
+            <inertia ixx="0.1304158303609999" iyy="0.1303611813000909" izz="0.24143130580426014" ixy="-8.207010673684685e-06" iyz="1.4294269790344344e-06" ixz="-1.3876354790554046e-05" />
+        </inertial>
+        <visual name="right_wheel_visual">
+            <origin xyz="-0.00011675030934453545 0.00014720826142882893 -0.019999996185302748" rpy="-0.3490658503988659 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="file:///home/kotantu-desktop/ros2_ws/src/urdf_viewer/models/Sirius3/meshes/Right-Wheel-v1.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="wheel_gray">
+                <color rgba="0.3 0.3 0.3 1.0"/>
+            </material>
+        </visual>
+        <collision name="right_wheel_collision">
+            <origin xyz="-0.00011675030934453545 0.00014720826142882893 -0.019999996185302748" rpy="-0.3490658503988659 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="file:///home/kotantu-desktop/ros2_ws/src/urdf_viewer/models/Sirius3/meshes/Right-Wheel-v1.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="left_wheel">
+        <inertial>
+            <origin xyz="0.00025571114010537245 -0.00035762391299457035 0.021535223543513986" rpy="0.0 -0.0 0.0" />
+            <mass value="26.684250609189966" />
+            <inertia ixx="0.13041983338763763" iyy="0.13040791997952428" izz="0.24147472596060549" ixy="-1.9456112928552954e-05" iyz="1.3386522533801598e-05" ixz="-5.293518847926393e-06" />
+        </inertial>
+        <visual name="left_wheel_visual">
+            <origin xyz="0.00026615125671387575 -0.0003525431147384645 -0.019999996185302748" rpy="-3.141592653589793 -1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="file:///home/kotantu-desktop/ros2_ws/src/urdf_viewer/models/Sirius3/meshes/Left-Wheel-v1.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="wheel_gray">
+                <color rgba="0.3 0.3 0.3 1.0"/>
+            </material>
+        </visual>
+        <collision name="left_wheel_collision">
+            <origin xyz="0.00026615125671387575 -0.0003525431147384645 -0.019999996185302748" rpy="-3.141592653589793 -1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="file:///home/kotantu-desktop/ros2_ws/src/urdf_viewer/models/Sirius3/meshes/Left-Wheel-v1.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="left_wheel_joint" type="continuous">
+        <origin xyz="0.18100000000000002 -0.0014818300000000002 0.13236434" rpy="-3.141592653589793 -1.5707963267948966 0" />
+        <parent link="base_link" />
+        <child link="left_wheel" />
+        <axis xyz="0.0 0.0 1.0" />
+        <limit effort="100" velocity="100" />
+        <dynamics damping="0.1" friction="0.1" />
+    </joint>
+    <joint name="right_wheel_joint" type="continuous">
+        <origin xyz="-0.18100000000000002 -0.0014818300000000002 0.1325" rpy="-0.0 -1.5707963267948966 0" />
+        <parent link="base_link" />
+        <child link="right_wheel" />
+        <axis xyz="0.0 0.0 -1.0" />
+        <limit effort="100" velocity="100" />
+        <dynamics damping="0.1" friction="0.1" />
+    </joint>
+
+    <!-- Gazebo固有の色設定 -->
+    <gazebo reference="base_link">
+        <material>
+            <diffuse>0.1 0.3 0.6 1.0</diffuse>
+            <ambient>0.1 0.2 0.4 1.0</ambient>
+            <specular>0.2 0.4 0.8 1.0</specular>
+        </material>
+        <self_collide>false</self_collide>
+    </gazebo>
+
+    <gazebo reference="right_wheel">
+        <material>
+            <diffuse>0.3 0.3 0.3 1.0</diffuse>
+            <ambient>0.2 0.2 0.2 1.0</ambient>
+            <specular>0.15 0.15 0.15 1.0</specular>
+        </material>
+        <mu1>1.0</mu1>
+        <mu2>1.0</mu2>
+        <kp>500000.0</kp>
+        <kd>10.0</kd>
+        <self_collide>false</self_collide>
+    </gazebo>
+
+    <gazebo reference="left_wheel">
+        <material>
+            <diffuse>0.3 0.3 0.3 1.0</diffuse>
+            <ambient>0.2 0.2 0.2 1.0</ambient>
+            <specular>0.15 0.15 0.15 1.0</specular>
+        </material>
+        <mu1>1.0</mu1>
+        <mu2>1.0</mu2>
+        <kp>500000.0</kp>
+        <kd>10.0</kd>
+        <self_collide>false</self_collide>
+    </gazebo>
+
+    <!-- 差動二輪のプラグイン設定 -->
+    <gazebo>
+        <plugin filename="libignition-gazebo-diff-drive-system.so" name="ignition::gazebo::systems::DiffDrive">
+            <left_joint>left_wheel_joint</left_joint>
+            <right_joint>right_wheel_joint</right_joint>
+            <wheel_separation>0.362</wheel_separation>
+            <wheel_radius>0.0825</wheel_radius>
+            <odom_publish_frequency>10</odom_publish_frequency>
+            <topic>cmd_vel</topic>
+            <odom_topic>odom</odom_topic>
+            <odom_frame>odom</odom_frame>
+            <robot_base_frame>base_footprint</robot_base_frame>
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+        </plugin>
+    </gazebo>
+</robot>
