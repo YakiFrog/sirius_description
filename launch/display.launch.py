@@ -39,7 +39,7 @@ def generate_launch_description():
         executable='robot_state_publisher',
         parameters=[{
             'robot_description': ParameterValue(
-                Command(['xacro ', urdf_file_path, ' prefix:=sirius/']),
+                Command(['xacro ', urdf_file_path, ' prefix:=sirius3/']),
                 value_type=str
             ),
             'use_sim_time': LaunchConfiguration('use_sim_time')

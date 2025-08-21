@@ -15,7 +15,7 @@
   <!-- 引数 -->
   <xacro:arg name="package_name" default="sirius_description" />
   <xacro:arg name="use_sim_time" default="true" />
-  <xacro:arg name="prefix" default="sirius/" />
+  <xacro:arg name="prefix" default="sirius3/" />
 
   <!-- マテリアル定義 -->
   <material name="base_blue">
