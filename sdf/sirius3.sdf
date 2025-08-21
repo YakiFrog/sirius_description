@@ -12,12 +12,13 @@
     <link name="base_link">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
+        <pose>0 0.15 0 0 0 0</pose>
         <mass>55.93</mass>
         <inertia>
-          <ixx>2.8808637737854452</ixx>
+          <ixx>5.0</ixx>
           <ixy>0.000982314201767401</ixy>
           <ixz>-0.0034301184728964904</ixz>
-          <iyy>2.459771630191444</iyy>
+          <iyy>4.5</iyy>
           <iyz>0.26295068207750116</iyz>
           <izz>2.1448545974410616</izz>
         </inertia>
@@ -42,6 +43,22 @@
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
+        <!-- 摩擦 -->
+        /// <summary>
+        /// 摩擦係数の目安:
+        /// 0.0 = 完全に滑る（氷のような状態）
+        /// 0.8 = かなり高い摩擦（ゴムと乾いたコンクリートに近い）
+        /// 1.0 = 非常に高い摩擦
+        /// 1.5以上 = 極めて高い摩擦
+        /// </summary>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.5</mu> <!-- すべり方向への摩擦係数 -->
+              <mu2>0.8</mu2> <!-- 法線方向への摩擦係数 -->
+            </ode>
+          </friction>
+        </surface>
       </collision>
 
       <!-- LiDAR センサー -->
@@ -76,7 +93,7 @@
 
     <!-- Left Wheel -->
     <link name="left_wheel">
-      <pose relative_to="base_link">0.18 0 0.13 -3.141592653589793 -1.5707963267948966 0</pose>
+      <pose relative_to="base_link">0.15 0 0.13 -3.141592653589793 -1.5707963267948966 0</pose>
       <inertial>
         <pose>0.0 0.0 0.021535 0 0 0</pose>
         <mass>26.684250609189966</mass>
@@ -111,12 +128,20 @@
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.5</mu>
+              <mu2>1.5</mu2>
+            </ode>
+          </friction>
+        </surface>
       </collision>
     </link>
 
     <!-- Right Wheel -->
     <link name="right_wheel">
-      <pose relative_to="base_link">-0.18 0 0.13 0.0 -1.5707963267948966 0</pose>
+      <pose relative_to="base_link">-0.15 0 0.13 0.0 -1.5707963267948966 0</pose>
       <inertial>
         <pose>0.0 0.0 0.021535 0 0 0</pose>
         <mass>26.680591288269447</mass>
@@ -151,12 +176,20 @@
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.5</mu>
+              <mu2>1.5</mu2>
+            </ode>
+          </friction>
+        </surface>
       </collision>
     </link>
 
     <!-- LiDAR Link -->
     <link name="lidar_link">
-      <pose relative_to="base_link">0.00 0 0.85 0 0 0</pose>
+      <pose relative_to="base_link">0 0 0.85 0 0 0</pose>
       <inertial>
         <mass>0.5</mass>
         <inertia>
@@ -209,8 +242,8 @@
           <velocity>100</velocity>
         </limit>
         <dynamics>
-          <damping>0.1</damping>
-          <friction>0.1</friction>
+          <damping>5.0</damping>
+          <friction>2.0</friction>
         </dynamics>
       </axis>
     </joint>
@@ -225,8 +258,8 @@
           <velocity>100</velocity>
         </limit>
         <dynamics>
-          <damping>0.1</damping>
-          <friction>0.1</friction>
+          <damping>5.0</damping>
+          <friction>2.0</friction>
         </dynamics>
       </axis>
     </joint>
@@ -242,7 +275,7 @@
       <topic>cmd_vel</topic>    <!-- 速度指令のトピック名 -->
       <left_joint>left_wheel_joint</left_joint>    <!-- 左車輪のジョイント名 -->
       <right_joint>right_wheel_joint</right_joint>    <!-- 右車輪のジョイント名 -->
-      <wheel_separation>0.362</wheel_separation>    <!-- 車輪間距離 -->
+      <wheel_separation>0.30</wheel_separation>    <!-- 車輪間距離 -->
       <wheel_radius>0.0825</wheel_radius>    <!-- 車輪半径 -->
       <odom_publish_frequency>50</odom_publish_frequency>    <!-- Odometry公開の頻度 -->
     </plugin>
