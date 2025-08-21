@@ -128,10 +128,31 @@ def generate_launch_description():
     lidar_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/lidar@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan'],
+        arguments=['/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan'],
         output='screen'
     )
-    
+
+    # LiDAR2のros_gz_bridge
+    lidar2_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/hokuyo_scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan'],
+        output='screen'
+    )
+
+    # Hokuyo LiDAR用のTF Static Publisher
+    hokuyo_tf_publisher = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=[
+            '0', '-0.25', '0.17',  # x, y, z (位置)
+            '-1.57', '0', '0',     # roll, pitch, yaw (姿勢)
+            'sirius3/base_link',  # 親フレーム
+            'sirius3/base_link/lidar_link2'      # 子フレーム
+        ],
+        output='screen'
+    )
+
     # Teleopキーボードコントロール
     teleop_keyboard = Node(
         package='teleop_twist_keyboard',
@@ -171,7 +192,9 @@ def generate_launch_description():
                 twist_bridge,
                 robot_state_publisher,
                 joint_state_bridge,
-                lidar_bridge
+                lidar_bridge,
+                lidar2_bridge,
+                hokuyo_tf_publisher
             ]
         ),
         
