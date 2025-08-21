@@ -7,9 +7,7 @@ Panels:
         - /Global Options1
         - /Status1
         - /RobotModel1
-        - /RobotModel1/Status1
         - /TF1
-        - /TF1/Status1
       Splitter Ratio: 0.5
     Tree Height: 739
   - Class: rviz_common/Selection
@@ -102,7 +100,11 @@ Visualization Manager:
           Value: true
         sirius3/base_link:
           Value: true
+        sirius3/left_wheel:
+          Value: true
         sirius3/odom:
+          Value: true
+        sirius3/right_wheel:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -112,7 +114,10 @@ Visualization Manager:
       Tree:
         sirius3/base_footprint:
           sirius3/base_link:
-            {}
+            sirius3/left_wheel:
+              {}
+            sirius3/right_wheel:
+              {}
         sirius3/odom:
           {}
       Update Interval: 0
@@ -120,7 +125,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: sirius3/base_link
+    Fixed Frame: sirius3/odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -162,26 +167,21 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz_default_plugins/Orbit
-      Distance: 2.162454605102539
+      Angle: -1.5700000524520874
+      Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
-      Focal Point:
-        X: -0.05559271574020386
-        Y: -0.13556122779846191
-        Z: 0.20552387833595276
-      Focal Shape Fixed Size: true
-      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.690398097038269
+      Scale: 213.2488250732422
       Target Frame: <Fixed Frame>
-      Value: Orbit (rviz_default_plugins)
-      Yaw: 2.1553916931152344
+      Value: TopDownOrtho (rviz_default_plugins)
+      X: 0
+      Y: 0
     Saved: ~
 Window Geometry:
   Displays:
@@ -189,7 +189,7 @@ Window Geometry:
   Height: 1011
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000001000000000000015600000399fc0200000004fb000000100044006900730070006c006100790073010000003d00000399000000c900fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005c00fffffffb0000000a0056006900650077007300000001c800000108000000a400ffffff000005e20000039900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000002000000000000015600000399fc0200000003fb000000100044006900730070006c006100790073010000003d00000399000000c900fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005c00ffffff000000010000018700000399fc0200000001fb0000000a00560069006500770073010000003d00000399000000a400ffffff000004550000039900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Tool Properties:

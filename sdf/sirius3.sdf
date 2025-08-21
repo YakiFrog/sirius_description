@@ -130,7 +130,7 @@
     <joint name="footprint_to_base" type="fixed">
       <parent>base_footprint</parent>
       <child>base_link</child>
-      <pose>0 0 0 0 0 0</pose>
+      <pose>0 0 0 0 0 1.5707963267948966</pose>
     </joint>
 
     <joint name="left_wheel_joint" type="revolute">

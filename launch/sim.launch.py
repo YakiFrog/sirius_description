@@ -62,11 +62,11 @@ def generate_launch_description():
             '-name', 'sirius3',
             '-x', '0.0',
             '-y', '0.0', 
-            '-z', '0.0825'
+            '-z', '0.0825',
+            '-Y', '1.5708'  # 左に90度回転（ラジアンで指定、1.5708 ≒ π/2）
         ],
         output='screen'
     )
-    
     # Robot State Publisher
     robot_state_publisher = Node(
         package='robot_state_publisher',
