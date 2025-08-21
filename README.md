@@ -1,6 +1,67 @@
-# Sirius Robot Description
+# Sirius3 Description Package
 
-Sirius robot description package for RViz2 visualization and Gazebo simulation.
+Sirius3ロボットのROS 2記述パッケージです。
+
+## 構成
+
+```
+sirius_description/
+├── launch/
+│   └── sim.launch.py          # シミュレーション起動用launchファイル
+├── sdf/
+│   ├── sirius3.sdf           # 元の統合SDFファイル
+│   ├── sirius3_model.sdf     # ロボットモデルのみのSDFファイル
+│   └── Sirius3.urdf          # URDFファイル
+├── worlds/
+│   └── sirius_world.sdf      # ワールドファイル
+├── urdf/
+│   └── meshes/               # メッシュファイル
+└── setup_gazebo_env.sh       # Gazebo環境変数設定スクリプト
+```
+
+## 使用方法
+
+### 1. ビルド
+```bash
+cd ~/sirius_jazzy_ws
+colcon build --packages-select sirius_description
+source install/setup.bash
+```
+
+### 2. シミュレーション起動
+```bash
+ros2 launch sirius_description sim.launch.py
+```
+
+### 3. 手動でのGazebo起動
+```bash
+# ワールドファイルを直接起動
+gz sim ~/sirius_jazzy_ws/src/sirius_description/worlds/sirius_world.sdf
+```
+
+## 主な変更点
+
+- 元の`sirius3.sdf`をワールド部分とロボット部分に分離
+- `worlds/sirius_world.sdf`: 物理シミュレーション、照明、地面を含むワールド環境
+- `sdf/sirius3_model.sdf`: Sirius3ロボットモデルのみ
+- `launch/sim.launch.py`: ROS 2とGazebo間のブリッジを含む統合launchファイル
+
+## 機能
+
+- 差動二輪駆動制御
+- Odometry配信
+- TF配信
+- テレオペレーション（キーボード制御）
+- ROS 2 <-> Gazebo ブリッジ
+
+## 制御
+
+launchファイルを起動すると、自動的にテレオペレーションが起動します：
+- `i`: 前進
+- `j`: 左回転
+- `l`: 右回転
+- `k`: 停止
+- `,`: 後退
 
 ## Package Structure
 

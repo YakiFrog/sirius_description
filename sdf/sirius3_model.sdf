@@ -2,7 +2,7 @@
 <!-- Sirius3ロボットモデルのSDFファイル -->
 <sdf version="1.9">
   <model name="sirius3">
-
+    
     <!-- Base Footprint - ダミーリンク（質量なし） -->
     <link name="base_footprint">
       <!-- 空の慣性要素を持たないリンク（地面に接触する仮想的なリンク） -->
@@ -173,16 +173,11 @@
       <wheel_separation>0.362</wheel_separation>    <!-- 車輪間距離 -->
       <wheel_radius>0.0825</wheel_radius>    <!-- 車輪半径 -->
       <odom_publish_frequency>50</odom_publish_frequency>    <!-- Odometry公開の頻度 -->
-    </plugin>
-
-    <!-- joint pub -->
-    <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
-      <topic>joint_states</topic>
-      <!-- プレフィックスを追加 -->
-      <frame_prefix>sirius3/</frame_prefix>
-      <!-- 対象ジョイント名 -->
-      <joint_name>left_wheel_joint</joint_name>
-      <joint_name>right_wheel_joint</joint_name>
+      <odom_topic>odom</odom_topic>    <!-- Odometryトピック名 -->
+      <odom_frame>odom</odom_frame>    <!-- Odometryフレーム -->
+      <robot_base_frame>base_footprint</robot_base_frame>    <!-- ロボットベースフレーム -->
+      <publish_odom>true</publish_odom>    <!-- Odometry配信 -->
+      <publish_odom_tf>true</publish_odom_tf>    <!-- Odometry TF配信 -->
     </plugin>
     
   </model>

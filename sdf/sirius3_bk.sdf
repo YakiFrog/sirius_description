@@ -1,12 +1,61 @@
 <?xml version="1.0"?>
-<!-- Sirius3ロボットモデルのSDFファイル -->
 <sdf version="1.9">
-  <model name="sirius3">
+  <world name="sirius_world">
+    <!-- 物理シミュレーションの設定 -->
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
 
-    <!-- Base Footprint - ダミーリンク（質量なし） -->
-    <link name="base_footprint">
-      <!-- 空の慣性要素を持たないリンク（地面に接触する仮想的なリンク） -->
-    </link>
+    <!-- 必要なプラグインの読み込み -->
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+
+    <!-- 太陽光源の設定 -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- 地面モデルの設定 -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="sirius3">
+    <pose>0 0 0.0825 0 0 0</pose>
 
     <!-- Base Link -->
     <link name="base_link">
@@ -104,7 +153,7 @@
         <pose>-0.00011675030934453545 0.00014720826142882893 -0.019999996185302748 -0.3490658503988659 1.5707963267948966 0</pose>
         <geometry>
           <mesh>
-            <uri>file:///home/kotantu-nuc/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Right-Wheel-v1.stl</uri>
+            <uri>file:///home/kotantu-nuc/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Right-Wheel-v1.stl</uri>`
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -126,13 +175,6 @@
     </link>
 
     <!-- Joints -->
-    <!-- フットプリントとベースを接続するジョイント -->
-    <joint name="footprint_to_base" type="fixed">
-      <parent>base_footprint</parent>
-      <child>base_link</child>
-      <pose>0 0 0 0 0 0</pose>
-    </joint>
-
     <joint name="left_wheel_joint" type="revolute">
       <parent>base_link</parent>
       <child>left_wheel</child>
@@ -174,16 +216,7 @@
       <wheel_radius>0.0825</wheel_radius>    <!-- 車輪半径 -->
       <odom_publish_frequency>50</odom_publish_frequency>    <!-- Odometry公開の頻度 -->
     </plugin>
-
-    <!-- joint pub -->
-    <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
-      <topic>joint_states</topic>
-      <!-- プレフィックスを追加 -->
-      <frame_prefix>sirius3/</frame_prefix>
-      <!-- 対象ジョイント名 -->
-      <joint_name>left_wheel_joint</joint_name>
-      <joint_name>right_wheel_joint</joint_name>
-    </plugin>
     
   </model>
+  </world>
 </sdf>
