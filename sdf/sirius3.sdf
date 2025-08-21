@@ -10,7 +10,7 @@
 
     <!-- Base Link -->
     <link name="base_link">
-      <pose>0.0002947164165949175 0.09943035225547465 0.3230235286090795 0 0 0</pose>
+      <pose>0 0 0 0 0 0</pose>
       <inertial>
         <mass>55.93</mass>
         <inertia>
@@ -47,7 +47,7 @@
 
     <!-- Left Wheel -->
     <link name="left_wheel">
-      <pose>0.18129471641659492 0.09795201925547465 0.4553569872676875 -3.141592653589793 -1.5707963267948966 0</pose>
+      <pose relative_to="base_link">0.18 0 0.13 -3.141592653589793 -1.5707963267948966 0</pose>
       <inertial>
         <pose>0.0 0.0 0.021535 0 0 0</pose>
         <mass>26.684250609189966</mass>
@@ -61,7 +61,7 @@
         </inertia>
       </inertial>
       <visual name="left_wheel_visual">
-        <pose>0.00026615125671387575 -0.0003525431147384645 -0.019999996185302748 -3.141592653589793 -1.5707963267948966 0</pose>
+        <pose relative_to="left_wheel">0 0 -0.02 -3.141592653589793 -1.5707963267948966 0</pose>
         <geometry>
           <mesh>
             <uri>file:///home/kotantu-nuc/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Left-Wheel-v1.stl</uri>
@@ -75,7 +75,7 @@
         </material>
       </visual>
       <collision name="left_wheel_collision">
-        <pose>0.00026615125671387575 -0.0003525431147384645 -0.019999996185302748 -3.141592653589793 -1.5707963267948966 0</pose>
+        <pose relative_to="left_wheel">0 0 -0.02 -3.141592653589793 -1.5707963267948966 0</pose>
         <geometry>
           <mesh>
             <uri>file:///home/kotantu-nuc/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Left-Wheel-v1.stl</uri>
@@ -87,7 +87,7 @@
 
     <!-- Right Wheel -->
     <link name="right_wheel">
-      <pose>-0.18070528358340508 0.09795201925547465 0.4555569872676875 0.0 -1.5707963267948966 0</pose>
+      <pose relative_to="base_link">-0.18 0 0.13 0.0 -1.5707963267948966 0</pose>
       <inertial>
         <pose>0.0 0.0 0.021535 0 0 0</pose>
         <mass>26.680591288269447</mass>
@@ -101,7 +101,7 @@
         </inertia>
       </inertial>
       <visual name="right_wheel_visual">
-        <pose>-0.00011675030934453545 0.00014720826142882893 -0.019999996185302748 -0.3490658503988659 1.5707963267948966 0</pose>
+        <pose relative_to="right_wheel">0 0 -0.02 -0.3490658503988659 1.5707963267948966 0</pose>
         <geometry>
           <mesh>
             <uri>file:///home/kotantu-nuc/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Right-Wheel-v1.stl</uri>
@@ -115,12 +115,49 @@
         </material>
       </visual>
       <collision name="right_wheel_collision">
-        <pose>-0.00011675030934453545 0.00014720826142882893 -0.019999996185302748 -0.3490658503988659 1.5707963267948966 0</pose>
+        <pose relative_to="right_wheel">0 0 -0.02 -0.3490658503988659 1.5707963267948966 0</pose>
         <geometry>
           <mesh>
             <uri>file:///home/kotantu-nuc/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Right-Wheel-v1.stl</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- LiDAR Link -->
+    <link name="lidar_link">
+      <pose relative_to="base_link">0.00 0 0.85 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <visual name="lidar_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.052</radius>
+            <length>0.072</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.2 0.2 0.2 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+        </material>
+      </visual>
+      <collision name="lidar_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.052</radius>
+            <length>0.072</length>
+          </cylinder>
         </geometry>
       </collision>
     </link>
@@ -163,6 +200,12 @@
           <friction>0.1</friction>
         </dynamics>
       </axis>
+    </joint>
+
+    <!-- LiDAR Joint -->
+    <joint name="lidar_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>lidar_link</child>
     </joint>
 
     <!-- Differential Drive Plugin -->
