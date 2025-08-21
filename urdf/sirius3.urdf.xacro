@@ -22,8 +22,8 @@
     <color rgba="0.1 0.3 0.6 1.0"/>
   </material>
 
-  <material name="wheel_gray">
-    <color rgba="0.3 0.3 0.3 1.0"/>
+  <material name="lidar_gray">
+    <color rgba="0.2 0.2 0.2 1.0"/>
   </material>
 
   <!-- ベースフットプリント（地面接触点の仮想リンク） -->
@@ -122,4 +122,34 @@
     joint_rpy="-0.0 -1.5707963267948966 0"
     axis_xyz="0.0 0.0 -1.0"
   />
+
+  <!-- LiDAR Link -->
+  <link name="$(arg prefix)base_link/lidar_link">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      <mass value="0.5" />
+      <inertia ixx="0.01" iyy="0.01" izz="0.01" 
+               ixy="0.0" iyz="0.0" ixz="0.0" />
+    </inertial>
+    <visual name="lidar_visual">
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      <geometry>
+        <cylinder radius="0.052" length="0.072" />
+      </geometry>
+      <material name="lidar_gray" />
+    </visual>
+    <collision name="lidar_collision">
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      <geometry>
+        <cylinder radius="0.052" length="0.072" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- LiDAR Joint -->
+  <joint name="$(arg prefix)base_link/lidar_joint" type="fixed">
+    <origin xyz="0.0 0.0 0.85" rpy="0.0 0.0 0.0" />
+    <parent link="$(arg prefix)base_link" />
+    <child link="$(arg prefix)base_link/lidar_link" />
+  </joint>
 </robot>

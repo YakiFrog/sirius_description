@@ -124,6 +124,14 @@ def generate_launch_description():
         output='screen'
     )
     
+    # LiDARのros_gz_bridge
+    lidar_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/lidar@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan'],
+        output='screen'
+    )
+    
     # Teleopキーボードコントロール
     teleop_keyboard = Node(
         package='teleop_twist_keyboard',
@@ -162,7 +170,8 @@ def generate_launch_description():
                 odom_bridge,
                 twist_bridge,
                 robot_state_publisher,
-                joint_state_bridge
+                joint_state_bridge,
+                lidar_bridge
             ]
         ),
         
