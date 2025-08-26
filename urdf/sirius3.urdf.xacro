@@ -22,6 +22,10 @@
     <color rgba="0.1 0.3 0.6 1.0"/>
   </material>
 
+  <material name="wheel_gray">
+    <color rgba="0.5 0.5 0.5 1.0"/>
+  </material>
+
   <material name="lidar_gray">
     <color rgba="0.2 0.2 0.2 1.0"/>
   </material>
@@ -42,14 +46,14 @@
     <visual name="base_link_visual">
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
       <geometry>
-        <mesh filename="${mesh_path}/Sirius3-body-v2.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="${mesh_path}/Sirius3_body.stl" scale="0.0001 0.0001 0.0001" />
       </geometry>
       <material name="base_blue" />
     </visual>
     <collision name="base_link_collision">
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
       <geometry>
-        <mesh filename="${mesh_path}/Sirius3-body-v2.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="${mesh_path}/Sirius3_body.stl" scale="0.0001 0.0001 0.0001" />
       </geometry>
     </collision>
   </link>
@@ -58,9 +62,8 @@
   <joint name="$(arg prefix)footprint_to_base" type="fixed">
     <parent link="$(arg prefix)base_footprint"/>
     <child link="$(arg prefix)base_link"/>
-    <origin xyz="0 0 0" rpy="0 0 1.5707963267948966"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-
   <!-- ホイールマクロ定義 -->
   <xacro:macro name="wheel" params="prefix side reflect mesh_file wheel_origin_rpy wheel_visual_origin wheel_visual_rpy joint_origin joint_rpy axis_xyz">
     <link name="$(arg prefix)${side}_wheel">
@@ -73,14 +76,14 @@
       <visual name="${side}_wheel_visual">
         <origin xyz="${wheel_visual_origin}" rpy="${wheel_visual_rpy}" />
         <geometry>
-          <mesh filename="${mesh_path}/${mesh_file}" scale="0.001 0.001 0.001" />
+          <mesh filename="${mesh_path}/${mesh_file}" scale="0.0001 0.0001 0.0001" />
         </geometry>
         <material name="wheel_gray" />
       </visual>
       <collision name="${side}_wheel_collision">
         <origin xyz="${wheel_visual_origin}" rpy="${wheel_visual_rpy}" />
         <geometry>
-          <mesh filename="${mesh_path}/${mesh_file}" scale="0.001 0.001 0.001" />
+          <mesh filename="${mesh_path}/${mesh_file}" scale="0.0001 0.0001 0.0001" />
         </geometry>
       </collision>
     </link>
@@ -95,32 +98,32 @@
     </joint>
   </xacro:macro>
 
-  <!-- 左ホイール -->
-  <xacro:wheel 
-    prefix="$(arg prefix)"
-    side="left" 
-    reflect="1"
-    mesh_file="Left-Wheel-v1.stl"
-    wheel_origin_rpy="0.0 0.0 0.0"
-    wheel_visual_origin="0.00026615125671387575 -0.0003525431147384645 -0.019999996185302748"
-    wheel_visual_rpy="-3.141592653589793 -1.5707963267948966 0"
-    joint_origin="0.18100000000000002 -0.0014818300000000002 0.13236434"
-    joint_rpy="-3.141592653589793 -1.5707963267948966 0"
-    axis_xyz="0.0 0.0 1.0"
-  />
-
   <!-- 右ホイール -->
   <xacro:wheel 
     prefix="$(arg prefix)"
     side="right" 
     reflect="-1"
-    mesh_file="Right-Wheel-v1.stl"
+    mesh_file="Right_Wheel.stl"
     wheel_origin_rpy="0.0 0.0 0.0"
-    wheel_visual_origin="-0.00011675030934453545 0.00014720826142882893 -0.019999996185302748"
-    wheel_visual_rpy="-0.3490658503988659 1.5707963267948966 0"
-    joint_origin="-0.18100000000000002 -0.0014818300000000002 0.1325"
-    joint_rpy="-0.0 -1.5707963267948966 0"
-    axis_xyz="0.0 0.0 -1.0"
+    wheel_visual_origin="0.0 0.0 0.0"
+    wheel_visual_rpy="0.0 0.0 1.5707963267948966"
+    joint_origin="-1.809999996270403 -0.015078560389649666 1.3253258500000007"
+    joint_rpy="-1.5707963267948997 -1.5707963267948963 0"
+    axis_xyz="0.0 -1.0 3.944304526105057e-31"
+  />
+
+  <!-- 左ホイール -->
+  <xacro:wheel 
+    prefix="$(arg prefix)"
+    side="left" 
+    reflect="1"
+    mesh_file="Left_Wheel.stl"
+    wheel_origin_rpy="0.0 0.0 0.0"
+    wheel_visual_origin="0.0 0.0 0.0"
+    wheel_visual_rpy="0.0 0.0 3.141592653589793"
+    joint_origin="1.8100000037295931 -0.015078560389660538 1.3268722499999996"
+    joint_rpy="1.5707963267948937 -1.5707963267948963 0"
+    axis_xyz="0.0 -1.0 3.944304526105057e-31"
   />
 
   <!-- LiDAR Link -->
