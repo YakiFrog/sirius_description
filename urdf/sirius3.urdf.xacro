@@ -142,7 +142,7 @@
   />
 
   <!-- LiDAR Link -->
-  <link name="$(arg prefix)lidar_link">
+  <link name="$(arg prefix)base_link/lidar_link">
     <inertial>
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
       <mass value="0.5" />
@@ -168,6 +168,7 @@
   <joint name="$(arg prefix)lidar_joint" type="fixed">
     <origin xyz="0.0 0.0 0.85" rpy="0.0 0.0 0.0" />
     <parent link="$(arg prefix)base_link" />
-    <child link="$(arg prefix)lidar_link" />
+    <!-- 苦肉の策。これでGazebo上のTFと名前が重なるので無駄に増えなくなる -->
+    <child link="$(arg prefix)base_link/lidar_link" />
   </joint>
 </robot>

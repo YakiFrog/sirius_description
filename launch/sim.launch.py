@@ -140,18 +140,19 @@ def generate_launch_description():
         output='screen'
     )
 
-    # LiDAR (Velodyne)用のTF Static Publisher
-    lidar_tf_publisher = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        arguments=[
-            '0.0', '0.0', '0.85',  # x, y, z (位置)
-            '0', '0', '0',     # roll, pitch, yaw (姿勢)
-            'sirius3/base_link',  # 親フレーム
-            'sirius3/base_link/lidar_link'      # 子フレーム
-        ],
-        output='screen'
-    )
+    # # LiDAR (Velodyne)用のTF Static Publisher
+    # lidar_tf_publisher = Node(
+    #     package='tf2_ros',
+    #     executable='static_transform_publisher',
+    #     arguments=[
+    #         '0.0', '0.0', '0.85',  # x, y, z (位置)
+    #         '0', '0', '0',     # roll, pitch, yaw (姿勢)
+    #         'sirius3/base_link',  # 親フレーム
+    #         'sirius3/base_link/lidar_link'      # 子フレーム
+    #     ],
+    #     output='screen'
+    # )
+    # -> URDFでリンクを追加し、jointも追加したので、Robot State PublisherがTFを流すようになったので不要に。
 
     # Hokuyo LiDAR用のTF Static Publisher
     hokuyo_tf_publisher = Node(
@@ -207,7 +208,6 @@ def generate_launch_description():
                 joint_state_bridge,
                 lidar_bridge,
                 lidar2_bridge,
-                lidar_tf_publisher,
                 hokuyo_tf_publisher
             ]
         ),
