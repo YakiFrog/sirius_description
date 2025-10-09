@@ -124,7 +124,7 @@
     <!-- Left Wheel -->
     <link name="left_wheel">
 
-      <pose relative_to="base_link">0.0 0.15 0.13 -3.141592653589793 -1.5707963267948966 0</pose>
+      <pose relative_to="base_link">0.0 0.16 0.13 -3.141592653589793 -1.5707963267948966 0</pose>
       <inertial>
         <pose>0.0 0.0 0.021535 0 0 0</pose>
         <mass>26.684250609189966</mass>
@@ -172,7 +172,7 @@
 
     <!-- Right Wheel -->
     <link name="right_wheel">
-      <pose relative_to="base_link">0.0 -0.15 0.13 0.0 -1.5707963267948966 0</pose>
+      <pose relative_to="base_link">0.0 -0.16 0.13 0.0 -1.5707963267948966 0</pose>
       <inertial>
         <pose>0.0 0.0 0.021535 0 0 0</pose>
         <mass>26.680591288269447</mass>
