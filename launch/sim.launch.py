@@ -145,8 +145,8 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher',
         arguments=[
-            '0', '-0.25', '0.17',  # x, y, z (位置)
-            '-1.57', '0', '0',     # roll, pitch, yaw (姿勢)
+            '0.25', '0.0', '0.17',  # x, y, z (位置)
+            '0', '0', '0',     # roll, pitch, yaw (姿勢)
             'sirius3/base_link',  # 親フレーム
             'sirius3/base_link/lidar_link2'      # 子フレーム
         ],

@@ -93,7 +93,7 @@
 
       <!-- LiDAR センサー2(Hokuyo)-->
       <sensor name="lidar_link2" type="gpu_lidar">
-          <pose>0 -0.25 0.17 0 0 -1.57</pose>
+          <pose>0.25 0.0 0.17 0 0 0</pose>
           <topic>hokuyo_scan</topic>
           <update_rate>40</update_rate>
           <lidar>
