@@ -26,7 +26,7 @@
       <visual name="base_visual">
         <geometry>
           <mesh>
-            <uri>file:///home/kotantu-desktop/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Sirius3-body-v2.stl</uri>
+            <uri>../urdf/meshes/Sirius3-body-v2.stl</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -39,7 +39,7 @@
       <collision name="base_collision">
         <geometry>
           <mesh>
-            <uri>file:///home/kotantu-desktop/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Sirius3-body-v2.stl</uri>
+            <uri>../urdf/meshes/Sirius3-body-v2.stl</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -141,7 +141,7 @@
         <pose relative_to="left_wheel">0 0 0 -3.141592653589793 -1.5707963267948966 0</pose>
         <geometry>
           <mesh>
-            <uri>file:///home/kotantu-desktop/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Left-Wheel-v1.stl</uri>
+            <uri>../urdf/meshes/Left-Wheel-v1.stl</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -155,7 +155,7 @@
         <pose relative_to="left_wheel">0 0 0 -3.141592653589793 -1.5707963267948966 0</pose>
         <geometry>
           <mesh>
-            <uri>file:///home/kotantu-desktop/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Left-Wheel-v1.stl</uri>
+            <uri>../urdf/meshes/Left-Wheel-v1.stl</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -189,7 +189,7 @@
         <pose relative_to="right_wheel">0 0 0 0 1.5707963267948966 0</pose>
         <geometry>
           <mesh>
-            <uri>file:///home/kotantu-desktop/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Right-Wheel-v1.stl</uri>
+            <uri>../urdf/meshes/Right-Wheel-v1.stl</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -203,7 +203,7 @@
         <pose relative_to="right_wheel">0 0 0 0 1.5707963267948966 0</pose>
         <geometry>
           <mesh>
-            <uri>file:///home/kotantu-desktop/sirius_jazzy_ws/src/sirius_description/urdf/meshes/Right-Wheel-v1.stl</uri>
+            <uri>../urdf/meshes/Right-Wheel-v1.stl</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
