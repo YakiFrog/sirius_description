@@ -154,3 +154,12 @@ sirius/base_footprint
 - The robot uses a differential drive configuration with two main wheels and two caster wheels for support
 - Frame prefix is set to "sirius/" to avoid naming conflicts
 - The robot description is compatible with both RViz2 visualization and Gazebo simulation
+
+
+## TF Debugging Commands
+To debug and visualize the TF frames, you can use the following commands:
+1. View the TF frame tree:
+   ```bash
+   ros2 run tf2_tools view_frames
+   ```
+   This will generate a PDF file named `frames.pdf` in the current directory, showing the TF frame hierarchy.
