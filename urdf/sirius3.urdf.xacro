@@ -112,12 +112,12 @@
     wheel_inertia_ixy="-1.3386522533795057e-05"
     wheel_inertia_iyz="1.9456112928556427e-05"
     wheel_inertia_ixz="-5.293518847815378e-06"
-    wheel_inertial_origin="0.00025571114010551453 -0.02153522228931916 -0.0003576198248327911"
-    wheel_visual_origin="0.00026615125671401783 0.019999997439497593 -0.0003525390265766926"
-    wheel_visual_rpy="-1.5707963267948966 -1.5265566588595898e-16 -1.5707963267948966"
+    wheel_inertial_origin="0 0 0"
+    wheel_visual_origin="0 0 0"
+    wheel_visual_rpy="0 0 0"
     joint_origin="0.0 0.16 0.13"
-    joint_rpy="1.5707963267948968 -1.5707963267948966 0"
-    axis_xyz="0.0 -1.0 0.0"
+    joint_rpy="0 0 0"
+    axis_xyz="0.0 1.0 0.0"
   />
 
   <!-- 右ホイール -->
@@ -133,11 +133,11 @@
     wheel_inertia_ixy="-1.3386522533795057e-05"
     wheel_inertia_iyz="1.9456112928556427e-05"
     wheel_inertia_ixz="-5.293518847815378e-06"
-    wheel_inertial_origin="0.00025571114010551453 -0.02153522228931916 -0.0003576198248327911"
-    wheel_visual_origin="0.00026615125671401783 -0.019999997439497593 -0.0003525390265766926"
-    wheel_visual_rpy="1.5707963267948966 1.5265566588595898e-16 1.5707963267948966"
+    wheel_inertial_origin="0 0 0"
+    wheel_visual_origin="0 0 0"
+    wheel_visual_rpy="0 0 0"
     joint_origin="0.0 -0.16 0.13"
-    joint_rpy="-1.5707963267948968 -1.5707963267948966 0"
+    joint_rpy="0 0 0"
     axis_xyz="0.0 1.0 0.0"
   />
 
