@@ -12,7 +12,7 @@
     <link name="base_link">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
-        <pose>0 0.15 0 0 0 0</pose>
+        <pose>-0.15 0 0 0 0 0</pose> <!-- 慣性の原点を15cm後ろにずらす -->
         <mass>55.93</mass>
         <inertia>
           <ixx>5.0</ixx>
