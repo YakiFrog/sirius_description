@@ -199,13 +199,19 @@ def generate_launch_description():
         # 1. 環境（ワールド）を最初に起動
         gazebo_world,
 
-        # 2. 3秒後にロボットをスポーン
+        # 2. 1秒後にclockブリッジを起動（最優先）
+        TimerAction(
+            period=1.0,
+            actions=[clock_bridge]
+        ),
+
+        # 3. 3秒後にロボットをスポーン
         TimerAction(
             period=3.0,
             actions=[spawn_robot]
         ),
 
-        # 3. 5秒後にブリッジ類を開始
+        # 4. 5秒後にブリッジ類とrobot_state_publisherを開始
         TimerAction(
             period=5.0,
             actions=[
@@ -216,12 +222,11 @@ def generate_launch_description():
                 joint_state_bridge,
                 lidar_bridge,
                 lidar2_bridge,
-                hokuyo_tf_publisher,
-                clock_bridge
+                hokuyo_tf_publisher
             ]
         ),
         
-        # 4. 7秒後にteleopを起動
+        # 5. 7秒後にteleopを起動
         TimerAction(
             period=7.0,
             actions=[
@@ -229,7 +234,7 @@ def generate_launch_description():
             ]
         ),
 
-        # 5. 8秒後にRVizを起動
+        # 6. 8秒後にRVizを起動
         TimerAction(
             period=8.0,
             actions=[
