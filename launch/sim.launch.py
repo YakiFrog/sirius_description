@@ -166,6 +166,14 @@ def generate_launch_description():
         ],
         output='screen'
     )
+    
+    # Clock bridgeを追加
+    clock_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/clock@rosgraph_msgs/msg/Clock@gz.msgs.Clock'],
+        output='screen'
+    )
 
     # Teleopキーボードコントロール
     teleop_keyboard = Node(
@@ -208,7 +216,8 @@ def generate_launch_description():
                 joint_state_bridge,
                 lidar_bridge,
                 lidar2_bridge,
-                hokuyo_tf_publisher
+                hokuyo_tf_publisher,
+                clock_bridge
             ]
         ),
         
