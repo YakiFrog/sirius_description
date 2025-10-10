@@ -1,15 +1,53 @@
 #!/usr/bin/env python3
 
 import os
+import subprocess
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, TimerAction, DeclareLaunchArgument
+from launch.actions import ExecuteProcess, TimerAction, DeclareLaunchArgument, OpaqueFunction
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, Command
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from ament_index_python.packages import get_package_share_directory
+
+def convert_sdf_to_urdf_with_sdformat_urdf(sdf_file_path, pkg_path):
+    """SDFファイルをsdformat_urdfでURDFに変換し、メッシュパスを修正"""
+    try:
+        # sdformat_urdfを使用してSDFをURDFに変換
+        result = subprocess.run(
+            ['ros2', 'run', 'sdformat_urdf', 'sdformat_urdf', '--input', sdf_file_path],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        
+        # 変換されたURDFを取得
+        urdf_content = result.stdout
+        
+        # 相対パス（../urdf/meshes/）をpackage://形式に置換
+        urdf_content = urdf_content.replace(
+            '../urdf/meshes/',
+            'package://sirius_description/urdf/meshes/'
+        )
+        
+        # file://パスもpackage://形式に置換
+        urdf_content = urdf_content.replace(
+            f'file://{pkg_path}/urdf/meshes/',
+            'package://sirius_description/urdf/meshes/'
+        )
+        
+        return urdf_content
+    except subprocess.CalledProcessError as e:
+        print(f"Error converting SDF to URDF with sdformat_urdf: {e}")
+        print(f"stderr: {e.stderr if hasattr(e, 'stderr') else 'N/A'}")
+        return None
+    except FileNotFoundError:
+        print("Error: sdformat_urdf not found.")
+        return None
 
 def generate_launch_description():
     # パッケージのパスを取得
     pkg_share = FindPackageShare('sirius_description')
+    pkg_path = get_package_share_directory('sirius_description')
     
     # 環境SDFファイルのパスを設定
     world_sdf_file = PathJoinSubstitution([
@@ -25,7 +63,10 @@ def generate_launch_description():
         'sirius3.sdf'
     ])
     
-    # URDFファイルのパスを設定
+    # ロボットSDFファイルの絶対パス（変換用）
+    robot_sdf_file_abs = os.path.join(pkg_path, 'sdf', 'sirius3.sdf')
+    
+    # URDFファイルのパスを設定（フォールバック用）
     urdf_file = PathJoinSubstitution([
         pkg_share,
         'urdf',
@@ -67,18 +108,37 @@ def generate_launch_description():
         ],
         output='screen'
     )
-    # Robot State Publisher
-    robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        parameters=[
-            {
-                'use_sim_time': LaunchConfiguration('use_sim_time'),
-                'robot_description': Command(['xacro ', urdf_file, ' prefix:=sirius3/'])
-            }
-        ],
-        output='screen'
-    )
+    
+    # SDFファイルをURDFに変換
+    robot_description_from_sdf = convert_sdf_to_urdf_with_sdformat_urdf(robot_sdf_file_abs, pkg_path)
+    
+    # Robot State Publisher (SDFから変換したURDFを使用、失敗時はxacro URDFにフォールバック)
+    if robot_description_from_sdf:
+        print("Using SDF converted to URDF with sdformat_urdf")
+        robot_state_publisher = Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            parameters=[
+                {
+                    'use_sim_time': LaunchConfiguration('use_sim_time'),
+                    'robot_description': robot_description_from_sdf
+                }
+            ],
+            output='screen'
+        )
+    else:
+        print("Using xacro URDF as fallback")
+        robot_state_publisher = Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            parameters=[
+                {
+                    'use_sim_time': LaunchConfiguration('use_sim_time'),
+                    'robot_description': Command(['xacro ', urdf_file, ' prefix:=sirius3/'])
+                }
+            ],
+            output='screen'
+        )
     
     # TFのros_gz_bridge
     tf_bridge = Node(

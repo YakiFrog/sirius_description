@@ -15,7 +15,7 @@ def generate_launch_description():
     pkg_path = get_package_share_directory('sirius_description')
     
     # Path to the URDF file
-    urdf_file_path = os.path.join(pkg_path, 'urdf', 'sirius_robot.urdf.xacro')
+    urdf_file_path = os.path.join(pkg_path, 'urdf', 'sirius3.urdf.xacro')
     
     # Path to the RViz config file
     rviz_config_path = os.path.join(pkg_path, 'rviz', 'sirius_robot.rviz')
