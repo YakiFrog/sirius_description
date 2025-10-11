@@ -90,7 +90,7 @@ Visualization Manager:
         Inertia: false
         Mass: false
       Name: RobotModel
-      TF Prefix: ""
+      TF Prefix: "sirius3"
       Update Interval: 0
       Value: true
       Visual Enabled: true
