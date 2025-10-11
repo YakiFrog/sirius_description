@@ -6,8 +6,6 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /LaserScan1
-        - /LaserScan2
       Splitter Ratio: 0.5
     Tree Height: 739
   - Class: rviz_common/Selection
@@ -62,26 +60,30 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        sirius3/base_footprint:
+        base_footprint:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        sirius3/base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        sirius3/base_link/lidar_link:
+        base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        sirius3/left_wheel:
+        left_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        sirius3/right_wheel:
+        lidar_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lidar_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -90,7 +92,7 @@ Visualization Manager:
         Inertia: false
         Mass: false
       Name: RobotModel
-      TF Prefix: "sirius3"
+      TF Prefix: sirius3
       Update Interval: 0
       Value: true
       Visual Enabled: true
@@ -101,15 +103,21 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        map:
+          Value: true
         sirius3/base_footprint:
           Value: true
         sirius3/base_link:
           Value: true
-        sirius3/base_link/lidar_link:
-          Value: true
-        sirius3/base_link/lidar_link2:
-          Value: true
         sirius3/left_wheel:
+          Value: true
+        sirius3/lidar_link:
+          Value: true
+        sirius3/lidar_link/lidar:
+          Value: true
+        sirius3/lidar_link2:
+          Value: true
+        sirius3/lidar_link2/lidar:
           Value: true
         sirius3/odom:
           Value: true
@@ -121,15 +129,19 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
+        map:
+          {}
         sirius3/odom:
           sirius3/base_footprint:
             sirius3/base_link:
-              sirius3/base_link/lidar_link:
-                {}
-              sirius3/base_link/lidar_link2:
-                {}
               sirius3/left_wheel:
                 {}
+              sirius3/lidar_link:
+                sirius3/lidar_link/lidar:
+                  {}
+              sirius3/lidar_link2:
+                sirius3/lidar_link2/lidar:
+                  {}
               sirius3/right_wheel:
                 {}
       Update Interval: 0
@@ -202,10 +214,33 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 0.699999988079071
+      Binary representation: false
+      Binary threshold: 100
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map_updates
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: sirius3/odom
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
