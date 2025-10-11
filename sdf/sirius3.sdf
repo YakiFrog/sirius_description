@@ -196,11 +196,12 @@
       </collision>
       
       <!-- LiDAR センサー(Velodyne)をlidar_linkに配置 -->
-      <!-- センサー名をシンプルにして、frame_idが sirius3/lidar_link/lidar になるようにする -->
+      <!-- gz_frame_idを使ってframe_idを sirius3/lidar_link に設定 -->
       <sensor name="lidar" type="gpu_lidar">
           <pose>0 0 0 0 0 0</pose>
           <topic>scan</topic>
           <update_rate>10</update_rate>
+          <!-- <gz_frame_id>sirius3/lidar_link</gz_frame_id> -->
           <lidar>
               <scan>
                   <horizontal>
@@ -242,11 +243,12 @@
       </inertial>
       
       <!-- Hokuyoセンサーをlidar_link2に配置 -->
-      <!-- センサー名をシンプルにして、frame_idが sirius3/lidar_link2/lidar になるようにする -->
+      <!-- gz_frame_idを使ってframe_idを sirius3/lidar_link2 に設定 -->
       <sensor name="lidar" type="gpu_lidar">
           <pose>0 0 0 0 0 0</pose>
           <topic>hokuyo_scan</topic>
           <update_rate>40</update_rate>
+          <!-- <gz_frame_id>sirius3/lidar_link2/lidar</gz_frame_id> -->
           <lidar>
               <scan>
                   <horizontal>
