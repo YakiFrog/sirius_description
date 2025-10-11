@@ -189,18 +189,7 @@ def generate_launch_description():
     # )
     # -> URDFでリンクを追加し、jointも追加したので、Robot State PublisherがTFを流すようになったので不要に。
 
-    # Hokuyo LiDAR用のTF Static Publisher
-    hokuyo_tf_publisher = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        arguments=[
-            '0.25', '0.0', '0.17',  # x, y, z (位置)
-            '0', '0', '0',     # roll, pitch, yaw (姿勢)
-            'sirius3/base_link',  # 親フレーム
-            'sirius3/base_link/lidar_link2'      # 子フレーム
-        ],
-        output='screen'
-    )
+    # Hokuyo LiDAR用のTF Static Publisherも不要（lidar_link2がSDFで定義され、Robot State Publisherが公開）
     
     # Clock bridgeを追加
     clock_bridge = Node(
@@ -256,8 +245,7 @@ def generate_launch_description():
                 robot_state_publisher,
                 joint_state_bridge,
                 lidar_bridge,
-                lidar2_bridge,
-                # hokuyo_tf_publisher
+                lidar2_bridge
             ]
         ),
         

@@ -60,67 +60,6 @@
           </friction>
         </surface>
       </collision>
-
-      <!-- LiDAR センサー(Velodyne) -->
-      <!-- Note: センサーはbase_linkに物理的に取り付けられ、lidar_linkフレームでTFが公開される -->
-      <sensor name="velodyne_lidar" type="gpu_lidar">
-          <pose>0 0 0.85 0 0 0</pose>
-          <topic>scan</topic>
-          <update_rate>10</update_rate>
-          <lidar>
-              <scan>
-                  <horizontal>
-                      <samples>360</samples>
-                      <resolution>1</resolution>
-                      <min_angle>-3.14159</min_angle>
-                      <max_angle>3.14159</max_angle>
-                  </horizontal>
-              </scan>
-              <range>
-                  <min>0.1</min>
-                  <max>100.0</max>
-                  <resolution>0.01</resolution>
-              </range>
-              <noise>
-                  <type>gaussian</type>
-                  <mean>0.0</mean>
-                  <stddev>0.01</stddev>
-              </noise>
-          </lidar>
-          <visualize>true</visualize>
-          <always_on>1</always_on>
-      </sensor>
-
-
-      <!-- LiDAR センサー2(Hokuyo)-->
-      <!-- Note: センサーはbase_linkに物理的に取り付けられている -->
-      <sensor name="hokuyo_lidar" type="gpu_lidar">
-          <pose>0.25 0.0 0.17 0 0 0</pose>
-          <topic>hokuyo_scan</topic>
-          <update_rate>40</update_rate>
-          <lidar>
-              <scan>
-                  <horizontal>
-                      <samples>360</samples>
-                      <resolution>1</resolution>
-                      <min_angle>-1.5708</min_angle>
-                      <max_angle>1.5708</max_angle>
-                  </horizontal>
-              </scan>
-              <range>
-                  <min>0.1</min>
-                  <max>30.0</max>
-                  <resolution>0.001</resolution>
-              </range>
-              <noise>
-                  <type>gaussian</type>
-                  <mean>0.0</mean>
-                  <stddev>0.01</stddev>
-              </noise>
-          </lidar>
-          <visualize>true</visualize>
-          <always_on>1</always_on>
-      </sensor>
     </link>
 
     <!-- Left Wheel -->
@@ -255,6 +194,80 @@
           </cylinder>
         </geometry>
       </collision>
+      
+      <!-- LiDAR センサー(Velodyne)をlidar_linkに配置 -->
+      <sensor name="velodyne_lidar" type="gpu_lidar">
+          <pose>0 0 0 0 0 0</pose>
+          <topic>scan</topic>
+          <update_rate>10</update_rate>
+          <lidar>
+              <scan>
+                  <horizontal>
+                      <samples>360</samples>
+                      <resolution>1</resolution>
+                      <min_angle>-3.14159</min_angle>
+                      <max_angle>3.14159</max_angle>
+                  </horizontal>
+              </scan>
+              <range>
+                  <min>0.1</min>
+                  <max>100.0</max>
+                  <resolution>0.01</resolution>
+              </range>
+              <noise>
+                  <type>gaussian</type>
+                  <mean>0.0</mean>
+                  <stddev>0.01</stddev>
+              </noise>
+          </lidar>
+          <visualize>true</visualize>
+          <always_on>1</always_on>
+      </sensor>
+    </link>
+
+    <!-- LiDAR Link 2 (Hokuyo) -->
+    <link name="lidar_link2">
+      <pose relative_to="base_link">0.25 0.0 0.17 0 0 0</pose>
+      <inertial>
+        <mass>0.3</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      
+      <!-- Hokuyoセンサーをlidar_link2に配置 -->
+      <sensor name="hokuyo_lidar" type="gpu_lidar">
+          <pose>0 0 0 0 0 0</pose>
+          <topic>hokuyo_scan</topic>
+          <update_rate>40</update_rate>
+          <lidar>
+              <scan>
+                  <horizontal>
+                      <samples>360</samples>
+                      <resolution>1</resolution>
+                      <min_angle>-1.5708</min_angle>
+                      <max_angle>1.5708</max_angle>
+                  </horizontal>
+              </scan>
+              <range>
+                  <min>0.1</min>
+                  <max>30.0</max>
+                  <resolution>0.001</resolution>
+              </range>
+              <noise>
+                  <type>gaussian</type>
+                  <mean>0.0</mean>
+                  <stddev>0.01</stddev>
+              </noise>
+          </lidar>
+          <visualize>true</visualize>
+          <always_on>1</always_on>
+      </sensor>
     </link>
 
     <!-- Joints -->
@@ -301,6 +314,12 @@
     <joint name="lidar_joint" type="fixed">
       <parent>base_link</parent>
       <child>lidar_link</child>
+    </joint>
+
+    <!-- LiDAR2 Joint (Hokuyo) -->
+    <joint name="lidar2_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>lidar_link2</child>
     </joint>
 
     <!-- Differential Drive Plugin -->
