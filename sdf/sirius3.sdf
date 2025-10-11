@@ -62,7 +62,8 @@
       </collision>
 
       <!-- LiDAR センサー(Velodyne) -->
-      <sensor name="lidar_link" type="gpu_lidar">
+      <!-- Note: センサーはbase_linkに物理的に取り付けられ、lidar_linkフレームでTFが公開される -->
+      <sensor name="velodyne_lidar" type="gpu_lidar">
           <pose>0 0 0.85 0 0 0</pose>
           <topic>scan</topic>
           <update_rate>10</update_rate>
@@ -92,7 +93,8 @@
 
 
       <!-- LiDAR センサー2(Hokuyo)-->
-      <sensor name="lidar_link2" type="gpu_lidar">
+      <!-- Note: センサーはbase_linkに物理的に取り付けられている -->
+      <sensor name="hokuyo_lidar" type="gpu_lidar">
           <pose>0.25 0.0 0.17 0 0 0</pose>
           <topic>hokuyo_scan</topic>
           <update_rate>40</update_rate>

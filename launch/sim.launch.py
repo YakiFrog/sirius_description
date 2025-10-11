@@ -112,6 +112,8 @@ def generate_launch_description():
     )
     
     # TFのros_gz_bridge
+    # Note: Gazeboから出力されるTFには既に sirius3/ プレフィックスが付いているため、
+    # /tf にリマップしてグローバルなTFツリーに統合します
     tf_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -125,6 +127,8 @@ def generate_launch_description():
     )
     
     # Odometryのros_gz_bridge
+    # Note: Odometryメッセージのframe_idには既に sirius3/ プレフィックスが付いています
+    # 単一ロボットの場合は /odom でOK、複数ロボットの場合は /sirius3/odom 推奨
     odom_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
