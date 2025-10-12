@@ -201,7 +201,8 @@
           <pose>0 0 0 0 0 0</pose>
           <topic>scan</topic>
           <update_rate>10</update_rate>
-          <!-- <gz_frame_id>sirius3/lidar_link</gz_frame_id> -->
+          <!-- 大事：これがなければ、frameID: sirius3/lidar_link/lidarになる -->
+          <gz_frame_id>sirius3/lidar_link</gz_frame_id>
           <lidar>
               <scan>
                   <horizontal>
@@ -248,7 +249,8 @@
           <pose>0 0 0 0 0 0</pose>
           <topic>hokuyo_scan</topic>
           <update_rate>40</update_rate>
-          <!-- <gz_frame_id>sirius3/lidar_link2/lidar</gz_frame_id> -->
+          <!-- 大事：これがなければ、frameID: sirius3/lidar_link2/lidarになる -->
+          <gz_frame_id>sirius3/lidar_link2</gz_frame_id> 
           <lidar>
               <scan>
                   <horizontal>

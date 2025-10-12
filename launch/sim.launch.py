@@ -174,22 +174,6 @@ def generate_launch_description():
         arguments=['/hokuyo_scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan'],
         output='screen'
     )
-
-    # # LiDAR (Velodyne)用のTF Static Publisher
-    # lidar_tf_publisher = Node(
-    #     package='tf2_ros',
-    #     executable='static_transform_publisher',
-    #     arguments=[
-    #         '0.0', '0.0', '0.85',  # x, y, z (位置)
-    #         '0', '0', '0',     # roll, pitch, yaw (姿勢)
-    #         'sirius3/base_link',  # 親フレーム
-    #         'sirius3/base_link/lidar_link'      # 子フレーム
-    #     ],
-    #     output='screen'
-    # )
-    # -> URDFでリンクを追加し、jointも追加したので、Robot State PublisherがTFを流すようになったので不要に。
-
-    # Hokuyo LiDAR用のTF Static Publisherも不要（lidar_link2がSDFで定義され、Robot State Publisherが公開）
     
     # センサーframe_id用の追加TF（Gazeboが生成するframe_idとTFツリーを接続）
     # Velodyne: sirius3/lidar_link/lidar -> sirius3/lidar_link への identity transform
@@ -273,8 +257,8 @@ def generate_launch_description():
                 joint_state_bridge,
                 lidar_bridge,
                 lidar2_bridge,
-                velodyne_frame_bridge,
-                hokuyo_frame_bridge
+                # velodyne_frame_bridge,
+                # hokuyo_frame_bridge
             ]
         ),
         
