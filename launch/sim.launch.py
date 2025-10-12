@@ -174,6 +174,15 @@ def generate_launch_description():
         arguments=['/hokuyo_scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'], # Gazebo -> ROS2
         output='screen'
     )
+    
+    # IMUのros_gz_bridge
+    imu_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/imu@sensor_msgs/msg/Imu[gz.msgs.IMU'], # Gazebo -> ROS2
+        output='screen'
+    )
+    
     # Velodyneのros_gz_bridge
     velodyne_bridge = Node(
         package='ros_gz_bridge',
@@ -240,6 +249,7 @@ def generate_launch_description():
                 joint_state_bridge,
                 lidar_bridge,
                 lidar2_bridge,
+                imu_bridge,
                 velodyne_bridge
             ]
         ),

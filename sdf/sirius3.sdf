@@ -3,6 +3,12 @@
 <sdf version="1.9">
   <model name="sirius3">
 
+    <!-- IMU System Plugin - IMUセンサーを動作させるために必要 -->
+    <plugin
+      filename="gz-sim-imu-system"
+      name="gz::sim::systems::Imu">
+    </plugin>
+
     <!-- Base Footprint - ダミーリンク（質量なし） -->
     <link name="base_footprint">
       <!-- 空の慣性要素を持たないリンク（地面に接触する仮想的なリンク） -->
@@ -263,6 +269,93 @@
       </sensor>
     </link>
 
+    <!-- IMU Link -->
+    <link name="imu_link">
+      <pose relative_to="base_link">0 0 0.65 0 0 0</pose> <!-- Velodyne(0.85m)の20cm下 -->
+      <inertial>
+        <mass>0.015</mass> <!-- 15g程度 -->
+        <inertia>
+          <ixx>0.0001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0001</iyy>
+          <iyz>0</iyz>
+          <izz>0.0001</izz>
+        </inertia>
+      </inertial>
+      <visual name="imu_visual">
+        <geometry>
+          <box>
+            <size>0.05 0.07 0.05</size> <!-- 小さな箱 -->
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.0 0.5 0.0 1</ambient>
+          <diffuse>0.0 0.8 0.0 1</diffuse>
+          <specular>0.0 0.8 0.0 1</specular>
+        </material>
+      </visual>
+      <collision name="imu_collision">
+        <geometry>
+          <box>
+            <size>0.03 0.03 0.01</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <!-- IMUセンサー -->
+      <sensor name="imu_sensor" type="imu">
+        <pose>0 0 0 0 0 0</pose>
+        <topic>imu</topic>
+        <update_rate>100</update_rate> <!-- 100Hz -->
+        <gz_frame_id>sirius3/imu_link</gz_frame_id>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.0002</stddev> <!-- ジャイロノイズ -->
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.0002</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.0002</stddev>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.017</stddev> <!-- 加速度ノイズ -->
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.017</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.017</stddev>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+        <always_on>1</always_on>
+        <visualize>true</visualize>
+      </sensor>
+    </link>
+
     <!-- LiDAR Link 2 (Hokuyo) -->
     <link name="lidar_link2">
       <pose relative_to="base_link">0.25 0.0 0.17 0 0 0</pose>
@@ -354,6 +447,12 @@
     <joint name="lidar_joint" type="fixed">
       <parent>base_link</parent>
       <child>lidar_link</child>
+    </joint>
+
+    <!-- IMU Joint -->
+    <joint name="imu_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>imu_link</child>
     </joint>
 
     <!-- LiDAR2 Joint (Hokuyo) -->
