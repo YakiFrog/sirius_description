@@ -163,7 +163,7 @@ def generate_launch_description():
     lidar_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan'],
+        arguments=['/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'],
         output='screen'
     )
 
@@ -171,7 +171,7 @@ def generate_launch_description():
     lidar2_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/hokuyo_scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan'],
+        arguments=['/hokuyo_scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'],
         output='screen'
     )
     # Velodyneのros_gz_bridge
