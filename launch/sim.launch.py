@@ -174,34 +174,17 @@ def generate_launch_description():
         arguments=['/hokuyo_scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan'],
         output='screen'
     )
-    
-    # センサーframe_id用の追加TF（Gazeboが生成するframe_idとTFツリーを接続）
-    # Velodyne: sirius3/lidar_link/lidar -> sirius3/lidar_link への identity transform
-    velodyne_frame_bridge = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        arguments=[
-            '0', '0', '0',  # x, y, z
-            '0', '0', '0',  # roll, pitch, yaw
-            'sirius3/lidar_link',  # 親フレーム
-            'sirius3/lidar_link/lidar'  # 子フレーム（センサーのframe_id）
+    # Velodyneのros_gz_bridge
+    velodyne_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/velodyne_points/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked'],
+        remappings=[
+            ('/velodyne_points/points', '/velodyne_points')
         ],
         output='screen'
     )
-    
-    # Hokuyo: sirius3/lidar_link2/lidar -> sirius3/lidar_link2 への identity transform
-    hokuyo_frame_bridge = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        arguments=[
-            '0', '0', '0',  # x, y, z
-            '0', '0', '0',  # roll, pitch, yaw
-            'sirius3/lidar_link2',  # 親フレーム
-            'sirius3/lidar_link2/lidar'  # 子フレーム（センサーのframe_id）
-        ],
-        output='screen'
-    )
-    
+
     # Clock bridgeを追加
     clock_bridge = Node(
         package='ros_gz_bridge',
@@ -257,8 +240,7 @@ def generate_launch_description():
                 joint_state_bridge,
                 lidar_bridge,
                 lidar2_bridge,
-                # velodyne_frame_bridge,
-                # hokuyo_frame_bridge
+                velodyne_bridge
             ]
         ),
         
