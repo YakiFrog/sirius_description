@@ -16,8 +16,7 @@ Panels:
     Name: Tool Properties
     Splitter Ratio: 0.5886790156364441
   - Class: rviz_common/Views
-    Expanded:
-      - /Current View1
+    Expanded: ~
     Name: Views
     Splitter Ratio: 0.5
   - Class: nav2_rviz_plugins/Navigation 2
@@ -114,11 +113,7 @@ Visualization Manager:
           Value: true
         sirius3/lidar_link:
           Value: true
-        sirius3/lidar_link/lidar:
-          Value: true
         sirius3/lidar_link2:
-          Value: true
-        sirius3/lidar_link2/lidar:
           Value: true
         sirius3/odom:
           Value: true
@@ -130,7 +125,17 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        sirius3/odom:
+          sirius3/base_footprint:
+            sirius3/base_link:
+              sirius3/left_wheel:
+                {}
+              sirius3/lidar_link:
+                {}
+              sirius3/lidar_link2:
+                {}
+              sirius3/right_wheel:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -151,7 +156,7 @@ Visualization Manager:
       Max Intensity: -999999
       Min Color: 0; 0; 0
       Min Intensity: 999999
-      Name: LaserScan
+      Name: scan
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
@@ -185,7 +190,7 @@ Visualization Manager:
       Max Intensity: -999999
       Min Color: 0; 0; 0
       Min Intensity: 999999
-      Name: LaserScan
+      Name: hokuyo_scan
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
@@ -198,6 +203,39 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /hokuyo_scan
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 0
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: velodyne_points
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 5
+      Size (m): 0.009999999776482582
+      Style: Points
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /velodyne_points
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -391,7 +429,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: map
+    Fixed Frame: sirius3/odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -427,7 +465,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -1.579999566078186
+      Angle: -1.5700000524520874
       Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -437,12 +475,27 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 69.09972381591797
+      Scale: 133.5719451904297
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
       X: 0
       Y: 0
-    Saved: ~
+    Saved:
+      - Angle: -1.5700000524520874
+        Class: rviz_default_plugins/TopDownOrtho
+        Enable Stereo Rendering:
+          Stereo Eye Separation: 0.05999999865889549
+          Stereo Focal Distance: 1
+          Swap Stereo Eyes: false
+          Value: false
+        Invert Z Axis: false
+        Name: TopDownOrtho
+        Near Clip Distance: 0.009999999776482582
+        Scale: 133.5719451904297
+        Target Frame: <Fixed Frame>
+        Value: TopDownOrtho (rviz_default_plugins)
+        X: 0
+        Y: 0
 Window Geometry:
   Displays:
     collapsed: false
@@ -451,7 +504,7 @@ Window Geometry:
   Hide Right Dock: false
   Navigation 2:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000200000000000001b000000399fc0200000004fb000000100044006900730070006c006100790073010000003d00000399000000c900fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005c00fffffffb0000001000530065006c006500630074006f00720000000310000000c6000000c600ffffff000000010000018700000399fc0200000002fb0000000a00560069006500770073010000003d000001ac000000a400fffffffb00000018004e0061007600690067006100740069006f006e0020003201000001ef000001e7000001df00ffffff000003fb0000039900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000002000000000000015600000399fc0200000004fb000000100044006900730070006c006100790073010000003d00000399000000c900fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005c00fffffffb0000001000530065006c006500630074006f00720000000310000000c6000000c600ffffff000000010000018700000399fc0200000002fb0000000a00560069006500770073010000003d000001ac000000a400fffffffb00000018004e0061007600690067006100740069006f006e0020003201000001ef000001e7000001df00ffffff000004550000039900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Selector:

@@ -118,7 +118,7 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            '/model/sirius3/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V'
+            '/model/sirius3/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V' # Gazebo <-> ROS2
         ],
         remappings=[
             ('/model/sirius3/tf', '/tf')
@@ -133,7 +133,7 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            '/model/sirius3/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry'
+            '/model/sirius3/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry' # Gazebo -> ROS2
         ],
         remappings=[
             ('/model/sirius3/odom', '/odom')
@@ -145,7 +145,7 @@ def generate_launch_description():
     twist_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist'],
+        arguments=['/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist'], # ROS2 -> Gazebo
         output='screen'
     )
     
@@ -154,7 +154,7 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            '/joint_states@sensor_msgs/msg/JointState@gz.msgs.Model'
+            '/joint_states@sensor_msgs/msg/JointState@gz.msgs.Model' # Gazebo <-> ROS2
         ],
         output='screen'
     )
@@ -163,7 +163,7 @@ def generate_launch_description():
     lidar_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'],
+        arguments=['/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'], # Gazebo -> ROS2
         output='screen'
     )
 
@@ -171,14 +171,14 @@ def generate_launch_description():
     lidar2_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/hokuyo_scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'],
+        arguments=['/hokuyo_scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'], # Gazebo -> ROS2
         output='screen'
     )
     # Velodyneのros_gz_bridge
     velodyne_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/velodyne_points/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked'],
+        arguments=['/velodyne_points/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked'], # Gazebo -> ROS2
         remappings=[
             ('/velodyne_points/points', '/velodyne_points')
         ],
@@ -189,7 +189,7 @@ def generate_launch_description():
     clock_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'],
+        arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'], # Gazebo -> ROS2
         output='screen'
     )
 
