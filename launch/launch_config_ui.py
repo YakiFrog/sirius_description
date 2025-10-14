@@ -151,14 +151,14 @@ class LaunchConfigUI(QMainWindow):
         self._add_checkbox(
             components_layout, 
             'lidar_bridge', 
-            "LiDAR Bridge (/scan)", 
+            "Velodyne Bridge (/scan)", 
             True,
-            "2D LiDARセンサーのデータ（/scan）をGazeboからROS 2へブリッジします。障害物検知用"
+            "2D LiDARセンサーのデータ（/scan）をGazeboからROS 2へブリッジします。"
         )
         self._add_checkbox(
             components_layout, 
             'lidar2_bridge', 
-            "LiDAR2 Bridge (/hokuyo_scan)", 
+            "Hokuyo Bridge (/hokuyo_scan)", 
             True,
             "2台目の2D LiDARセンサーのデータ（/hokuyo_scan）をブリッジします"
         )
@@ -172,9 +172,9 @@ class LaunchConfigUI(QMainWindow):
         self._add_checkbox(
             components_layout, 
             'velodyne_bridge', 
-            "Velodyne Bridge (3D LiDAR)", 
+            "Velodyne Bridge (/velodyne_points)", 
             True,
-            "3D LiDAR（Velodyne）の点群データをブリッジします。3次元環境認識用"
+            "3D LiDAR（Velodyne）の点群データをブリッジします。"
         )
         
         # ツール関連
