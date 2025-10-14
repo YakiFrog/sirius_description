@@ -1,197 +1,26 @@
 #!/usr/bin/env python3
+"""
+Sirius シミュレーション起動ファイル（UI付き）
+UIで設定を選択してから起動するバージョン
+"""
 
 import os
 import sys
 import subprocess
+from pathlib import Path
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess, TimerAction, DeclareLaunchArgument, OpaqueFunction
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
-from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
-                               QHBoxLayout, QCheckBox, QPushButton, QComboBox, 
-                               QLabel, QGroupBox)
-from PySide6.QtCore import Qt
 
-class LaunchConfigUI(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.config = {
-            'world_file': 'sirius_world.sdf',
-            'spawn_robot': True,
-            'robot_state_publisher': True,
-            'tf_bridge': True,
-            'odom_bridge': True,
-            'twist_bridge': True,
-            'joint_state_bridge': True,
-            'lidar_bridge': True,
-            'lidar2_bridge': True,
-            'imu_bridge': True,
-            'velodyne_bridge': True,
-            'clock_bridge': True,
-            'teleop': True,
-            'rviz': True
-        }
-        self.launched = False
-        self.init_ui()
-        
-    def init_ui(self):
-        self.setWindowTitle('Sirius シミュレーション起動設定')
-        self.setGeometry(100, 100, 500, 600)
-        
-        central_widget = QWidget()
-        self.setCentralWidget(central_widget)
-        layout = QVBoxLayout(central_widget)
-        
-        # ワールド選択
-        world_group = QGroupBox("ワールド選択")
-        world_layout = QVBoxLayout()
-        
-        world_label = QLabel("起動するワールドファイル:")
-        world_layout.addWidget(world_label)
-        
-        self.world_combo = QComboBox()
-        # worldsディレクトリからSDFファイルを検索
-        pkg_path = get_package_share_directory('sirius_description')
-        worlds_path = os.path.join(pkg_path, 'worlds')
-        if os.path.exists(worlds_path):
-            sdf_files = [f for f in os.listdir(worlds_path) if f.endswith('.sdf')]
-            self.world_combo.addItems(sdf_files)
-        else:
-            self.world_combo.addItem('sirius_world.sdf')
-        
-        world_layout.addWidget(self.world_combo)
-        world_group.setLayout(world_layout)
-        layout.addWidget(world_group)
-        
-        # コンポーネント選択
-        components_group = QGroupBox("起動するコンポーネント")
-        components_layout = QVBoxLayout()
-        
-        self.checkboxes = {}
-        
-        # ロボット関連
-        robot_label = QLabel("ロボット:")
-        robot_label.setStyleSheet("font-weight: bold;")
-        components_layout.addWidget(robot_label)
-        
-        self.checkboxes['spawn_robot'] = QCheckBox("ロボットをスポーン")
-        self.checkboxes['spawn_robot'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['spawn_robot'])
-        
-        self.checkboxes['robot_state_publisher'] = QCheckBox("Robot State Publisher")
-        self.checkboxes['robot_state_publisher'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['robot_state_publisher'])
-        
-        # ブリッジ関連
-        bridge_label = QLabel("\nROS-Gazebo ブリッジ:")
-        bridge_label.setStyleSheet("font-weight: bold;")
-        components_layout.addWidget(bridge_label)
-        
-        self.checkboxes['tf_bridge'] = QCheckBox("TF Bridge")
-        self.checkboxes['tf_bridge'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['tf_bridge'])
-        
-        self.checkboxes['odom_bridge'] = QCheckBox("Odometry Bridge")
-        self.checkboxes['odom_bridge'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['odom_bridge'])
-        
-        self.checkboxes['twist_bridge'] = QCheckBox("Twist Bridge (cmd_vel)")
-        self.checkboxes['twist_bridge'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['twist_bridge'])
-        
-        self.checkboxes['joint_state_bridge'] = QCheckBox("Joint State Bridge")
-        self.checkboxes['joint_state_bridge'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['joint_state_bridge'])
-        
-        self.checkboxes['clock_bridge'] = QCheckBox("Clock Bridge")
-        self.checkboxes['clock_bridge'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['clock_bridge'])
-        
-        # センサー関連
-        sensor_label = QLabel("\nセンサー:")
-        sensor_label.setStyleSheet("font-weight: bold;")
-        components_layout.addWidget(sensor_label)
-        
-        self.checkboxes['lidar_bridge'] = QCheckBox("LiDAR Bridge (/scan)")
-        self.checkboxes['lidar_bridge'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['lidar_bridge'])
-        
-        self.checkboxes['lidar2_bridge'] = QCheckBox("LiDAR2 Bridge (/hokuyo_scan)")
-        self.checkboxes['lidar2_bridge'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['lidar2_bridge'])
-        
-        self.checkboxes['imu_bridge'] = QCheckBox("IMU Bridge")
-        self.checkboxes['imu_bridge'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['imu_bridge'])
-        
-        self.checkboxes['velodyne_bridge'] = QCheckBox("Velodyne Bridge (3D LiDAR)")
-        self.checkboxes['velodyne_bridge'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['velodyne_bridge'])
-        
-        # ツール関連
-        tools_label = QLabel("\nツール:")
-        tools_label.setStyleSheet("font-weight: bold;")
-        components_layout.addWidget(tools_label)
-        
-        self.checkboxes['teleop'] = QCheckBox("Teleopキーボードコントロール")
-        self.checkboxes['teleop'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['teleop'])
-        
-        self.checkboxes['rviz'] = QCheckBox("RViz2")
-        self.checkboxes['rviz'].setChecked(True)
-        components_layout.addWidget(self.checkboxes['rviz'])
-        
-        components_group.setLayout(components_layout)
-        layout.addWidget(components_group)
-        
-        # 起動ボタン
-        button_layout = QHBoxLayout()
-        
-        self.launch_button = QPushButton("起動")
-        self.launch_button.setStyleSheet("""
-            QPushButton {
-                background-color: #4CAF50;
-                color: white;
-                font-size: 16px;
-                font-weight: bold;
-                padding: 10px;
-                border-radius: 5px;
-            }
-            QPushButton:hover {
-                background-color: #45a049;
-            }
-        """)
-        self.launch_button.clicked.connect(self.on_launch)
-        button_layout.addWidget(self.launch_button)
-        
-        layout.addLayout(button_layout)
-        
-    def on_launch(self):
-        # 設定を保存
-        self.config['world_file'] = self.world_combo.currentText()
-        for key, checkbox in self.checkboxes.items():
-            self.config[key] = checkbox.isChecked()
-        
-        self.launched = True
-        self.close()
-    
-    def get_config(self):
-        return self.config if self.launched else None
+# launchディレクトリをPythonパスに追加
+launch_dir = Path(__file__).parent
+sys.path.insert(0, str(launch_dir))
 
-
-def show_ui():
-    """UIを表示して設定を取得"""
-    app = QApplication.instance()
-    if app is None:
-        app = QApplication(sys.argv)
-    
-    ui = LaunchConfigUI()
-    ui.show()
-    app.exec()
-    
-    return ui.get_config()
+# UIモジュールをインポート
+from launch_config_ui import show_launch_config_ui
 
 
 def convert_sdf_to_urdf(sdf_file_path, pkg_path):
@@ -221,7 +50,7 @@ def convert_sdf_to_urdf(sdf_file_path, pkg_path):
 def generate_launch_description_with_config(context, *args, **kwargs):
     """設定に基づいてLaunchDescriptionを生成"""
     # UIから設定を取得
-    config = show_ui()
+    config = show_launch_config_ui()
     
     if config is None:
         print("起動がキャンセルされました")
@@ -417,6 +246,7 @@ def generate_launch_description_with_config(context, *args, **kwargs):
 
 
 def generate_launch_description():
+    """Launch Descriptionを生成"""
     use_sim_time_arg = DeclareLaunchArgument(
         'use_sim_time',
         default_value='true',
