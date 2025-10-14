@@ -70,12 +70,18 @@ class LaunchConfigUI(QMainWindow):
         self.world_combo.description = "シミュレーション環境（ワールド）のSDFファイルを選択します"
         self.world_combo.installEventFilter(self)
         
-        # worldsディレクトリからSDFファイルを検索
-        pkg_path = get_package_share_directory('sirius_description')
-        worlds_path = os.path.join(pkg_path, 'worlds')
+        # worldsディレクトリからSDFファイルを検索（srcディレクトリを直接参照）
+        # このファイルのパスから推測: launch_config_ui.py -> launch/ -> sirius_description/ -> worlds/
+        launch_file_dir = os.path.dirname(os.path.abspath(__file__))
+        src_pkg_path = os.path.dirname(launch_file_dir)  # sirius_descriptionディレクトリ
+        worlds_path = os.path.join(src_pkg_path, 'worlds')
+        
         if os.path.exists(worlds_path):
-            sdf_files = [f for f in os.listdir(worlds_path) if f.endswith('.sdf')]
-            self.world_combo.addItems(sdf_files)
+            sdf_files = sorted([f for f in os.listdir(worlds_path) if f.endswith('.sdf')])
+            if sdf_files:
+                self.world_combo.addItems(sdf_files)
+            else:
+                self.world_combo.addItem('sirius_world.sdf')
         else:
             self.world_combo.addItem('sirius_world.sdf')
         
