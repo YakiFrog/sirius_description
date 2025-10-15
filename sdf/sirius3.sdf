@@ -420,7 +420,7 @@
       <visual name="realsense_visual">
         <geometry>
           <box>
-            <size>0.025 0.090 0.025</size> <!-- 小さな箱 -->
+            <size>0.025 0.090 0.025</size>
           </box>
         </geometry>
         <material>
@@ -443,10 +443,11 @@
         <always_on>1</always_on>
         <update_rate>30</update_rate>
         <camera>
-          <horizontal_fov>1.047</horizontal_fov>
+          <!-- RealSense D435 RGBカメラ仕様: 水平69.4°, 垂直42.5°, 対角77° -->
+          <horizontal_fov>1.2112</horizontal_fov>  <!-- 69.4° = 1.2112 rad -->
           <image>
             <width>640</width>
-            <height>480</height>
+            <height>480</height>  <!-- 垂直FOV約55°に自動計算される（実際のD435は42.5°） -->
             <format>R8G8B8</format>
           </image>
           <clip>
@@ -455,10 +456,11 @@
           </clip>
         </camera>
         <!-- RGBDカメラの深度情報設定 -->
+        <!-- RealSense D435 深度センサー仕様: 水平91.2°(±3°), 垂直65.5°, 対角100.6° -->
         <depth_camera>
           <clip>
-            <near>0.1</near>
-            <far>10.0</far>
+            <near>0.1</near>  <!-- D435: 最小測定距離 約0.1m -->
+            <far>10.0</far>   <!-- D435: 最大測定距離 約10m (条件による) -->
           </clip>
         </depth_camera>
         <!-- トピック名とフレームID（optical frameを使用） -->
