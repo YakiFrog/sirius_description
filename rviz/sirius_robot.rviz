@@ -7,8 +7,9 @@ Panels:
         - /Global Options1
         - /Status1
         - /Amcl Particle Swarm1/Topic1
+        - /PointCloud21/Topic1
       Splitter Ratio: 0.5
-    Tree Height: 491
+    Tree Height: 503
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -125,6 +126,8 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        map:
+          Value: true
         sirius3/base_footprint:
           Value: true
         sirius3/base_link:
@@ -153,6 +156,8 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
+        map:
+          {}
         sirius3/odom:
           sirius3/base_footprint:
             sirius3/base_link:
@@ -555,8 +560,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
+        Max Value: 1.0008060932159424
+        Min Value: 0.00044912099838256836
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -574,8 +579,8 @@ Visualization Manager:
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
+      Size (m): 0.10000000149011612
+      Style: Points
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -602,7 +607,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: sirius3/odom
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -638,26 +643,21 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz_default_plugins/XYOrbit
-      Distance: 5.995912551879883
+      Angle: -1.5700000524520874
+      Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
-      Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
-      Focal Shape Fixed Size: true
-      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5
-      Target Frame: <Fixed Frame>
-      Value: XYOrbit (rviz_default_plugins)
-      Yaw: 3.141592025756836
+      Scale: 64.33988952636719
+      Target Frame: map
+      Value: TopDownOrtho (rviz_default_plugins)
+      X: 0
+      Y: 0
     Saved:
       - Angle: -1.5700000524520874
         Class: rviz_default_plugins/TopDownOrtho
@@ -670,7 +670,7 @@ Visualization Manager:
         Name: TopDownOrtho
         Near Clip Distance: 0.009999999776482582
         Scale: 133.5719451904297
-        Target Frame: <Fixed Frame>
+        Target Frame: map
         Value: TopDownOrtho (rviz_default_plugins)
         X: 0
         Y: 0
@@ -691,7 +691,7 @@ Visualization Manager:
         Name: XYOrbit
         Near Clip Distance: 0.009999999776482582
         Pitch: 0.5
-        Target Frame: <Fixed Frame>
+        Target Frame: sirius3/base_footprint
         Value: XYOrbit (rviz_default_plugins)
         Yaw: 3.141592025756836
 Window Geometry:
@@ -704,7 +704,7 @@ Window Geometry:
     collapsed: false
   Navigation 2:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000200000000000001b600000399fc0200000008fb000000100044006900730070006c006100790073010000003d00000228000000c900fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005c00fffffffb0000001000530065006c006500630074006f00720000000310000000c6000000c600fffffffb0000000c00430061006d006500720061000000030b000000cb0000000000000000fb0000000c00430061006d006500720061010000030b000000cb0000000000000000fb0000000a0049006d006100670065010000026b0000016b0000001600fffffffb0000000c00430061006d00650072006101000002e0000000f60000000000000000000000010000018700000399fc0200000002fb0000000a00560069006500770073010000003d000001b4000000a400fffffffb00000018004e0061007600690067006100740069006f006e0020003201000001f7000001df000001df00ffffff000003f50000039900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000200000000000001b600000399fc0200000008fb000000100044006900730070006c006100790073010000003d00000234000000c900fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005c00fffffffb0000001000530065006c006500630074006f00720000000310000000c6000000c600fffffffb0000000c00430061006d006500720061000000030b000000cb0000000000000000fb0000000c00430061006d006500720061010000030b000000cb0000000000000000fb0000000a0049006d00610067006501000002770000015f0000001600fffffffb0000000c00430061006d00650072006101000002e0000000f60000000000000000000000010000018700000399fc0200000002fb0000000a00560069006500770073010000003d000001b4000000a400fffffffb00000018004e0061007600690067006100740069006f006e0020003201000001f7000001df000001cc00ffffff000003f50000039900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Selector:
