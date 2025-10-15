@@ -194,6 +194,36 @@ def generate_launch_description():
         output='screen'
     )
 
+    # RealSenseカメラのros_gz_bridge
+    # rgbd_cameraタイプは自動的にサブトピックを生成: /topic_name/image, /topic_name/depth_image, など
+    realsense_image_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/realsense/image@sensor_msgs/msg/Image[gz.msgs.Image'], # Gazebo -> ROS2
+        output='screen'
+    )
+    
+    realsense_depth_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/realsense/depth_image@sensor_msgs/msg/Image[gz.msgs.Image'], # Gazebo -> ROS2
+        output='screen'
+    )
+    
+    realsense_points_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/realsense/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked'], # Gazebo -> ROS2
+        output='screen'
+    )
+    
+    realsense_camera_info_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/realsense/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo'], # Gazebo -> ROS2
+        output='screen'
+    )
+
     # Clock bridgeを追加
     clock_bridge = Node(
         package='ros_gz_bridge',
@@ -250,7 +280,11 @@ def generate_launch_description():
                 lidar_bridge,
                 lidar2_bridge,
                 imu_bridge,
-                velodyne_bridge
+                velodyne_bridge,
+                realsense_image_bridge,
+                realsense_depth_bridge,
+                realsense_points_bridge,
+                realsense_camera_info_bridge
             ]
         ),
         

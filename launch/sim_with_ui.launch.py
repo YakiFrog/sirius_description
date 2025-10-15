@@ -218,6 +218,43 @@ def generate_launch_description_with_config(context, *args, **kwargs):
         )
         timer_actions_5sec.append(velodyne_bridge)
     
+    if config.get('realsense_bridge', True):  # デフォルトで有効
+        # RealSense RGB画像ブリッジ（rgbd_cameraは/topic_name/imageを生成）
+        realsense_image_bridge = Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            arguments=['/realsense/image@sensor_msgs/msg/Image[gz.msgs.Image'],
+            output='screen'
+        )
+        timer_actions_5sec.append(realsense_image_bridge)
+        
+        # RealSense深度画像ブリッジ
+        realsense_depth_bridge = Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            arguments=['/realsense/depth_image@sensor_msgs/msg/Image[gz.msgs.Image'],
+            output='screen'
+        )
+        timer_actions_5sec.append(realsense_depth_bridge)
+        
+        # RealSenseポイントクラウドブリッジ
+        realsense_points_bridge = Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            arguments=['/realsense/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked'],
+            output='screen'
+        )
+        timer_actions_5sec.append(realsense_points_bridge)
+        
+        # RealSenseカメラ情報ブリッジ
+        realsense_camera_info_bridge = Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            arguments=['/realsense/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo'],
+            output='screen'
+        )
+        timer_actions_5sec.append(realsense_camera_info_bridge)
+    
     if timer_actions_5sec:
         actions.append(TimerAction(period=5.0, actions=timer_actions_5sec))
     

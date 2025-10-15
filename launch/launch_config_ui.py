@@ -182,6 +182,13 @@ class LaunchConfigUI(QMainWindow):
             True,
             "3D LiDAR（Velodyne）の点群データをブリッジします。"
         )
+        self._add_checkbox(
+            components_layout, 
+            'realsense_bridge', 
+            "RealSense Camera Bridge", 
+            True,
+            "RGBDカメラ（RealSense）のRGB画像、深度画像、点群、カメラ情報をブリッジします"
+        )
         
         # ツール関連
         components_layout.addWidget(self._create_section_label("\nツール:"))
