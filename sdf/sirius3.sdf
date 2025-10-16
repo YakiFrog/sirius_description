@@ -18,15 +18,15 @@
     <link name="base_link">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
-        <pose>-0.15 0 0 0 0 0</pose> <!-- 慣性の原点を15cm後ろにずらす -->
+        <pose>-0.15 0 0 0 0 0</pose> 
         <mass>48.65</mass>
         <inertia>
           <ixx>5.0</ixx>
-          <ixy>0.000982314201767401</ixy>
-          <ixz>-0.0034301184728964904</ixz>
+          <ixy>0</ixy>  <!-- 非対角成分を0に -->
+          <ixz>0</ixz>   <!-- 非対角成分を0に -->
           <iyy>4.5</iyy>
-          <iyz>0.26295068207750116</iyz>
-          <izz>2.1448545974410616</izz>
+          <iyz>0</iyz>   <!-- 非対角成分を0に -->
+          <izz>2.5</izz> <!-- 増加: 2.14 → 2.5 -->
         </inertia>
       </inertial>
       <visual name="base_visual">
@@ -71,21 +71,21 @@
     <!-- Left Wheel -->
     <link name="left_wheel">
       <!-- 前後 左右 上下 回転 -->
-      <pose relative_to="base_link">0.0 0.16 0.1325 -3.141592653589793 -1.5707963267948966 0</pose> 
+      <pose relative_to="base_link">0.0 0.16 0.1325 0 -1.5707963267948966 0</pose> 
       <inertial>
         <pose>0.0 0.0 0.021535 0 0 0</pose>
-        <mass>26.684250609189966</mass>
+        <mass>26.68</mass>  <!-- 統一 -->
         <inertia>
-          <ixx>0.13041983338763763</ixx>
-          <ixy>-1.9456112928552954e-05</ixy>
-          <ixz>-5.293518847926393e-06</ixz>
-          <iyy>0.13040791997952428</iyy>
-          <iyz>1.3386522533801598e-05</iyz>
-          <izz>0.24147472596060549</izz>
+          <ixx>0.1304</ixx>  <!-- 統一 -->
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.1304</iyy>  <!-- 統一 -->
+          <iyz>0</iyz>
+          <izz>0.2414</izz>  <!-- 統一 -->
         </inertia>
       </inertial>
       <visual name="left_wheel_visual">
-        <pose relative_to="left_wheel">0 0 0 -3.141592653589793 -1.5707963267948966 0</pose>
+        <pose relative_to="left_wheel">0 0 0 0 -1.5707963267948966 0</pose>
         <geometry>
           <mesh>
             <uri>../urdf/meshes/Left-Wheel-v1.stl</uri>
@@ -122,14 +122,14 @@
       <pose relative_to="base_link">0.0 -0.16 0.1325 0.0 -1.5707963267948966 0</pose>
       <inertial>
         <pose>0.0 0.0 0.021535 0 0 0</pose>
-        <mass>26.680591288269447</mass>
+        <mass>26.68</mass>  <!-- 統一 -->
         <inertia>
-          <ixx>0.1304158303609999</ixx>
-          <ixy>-8.207010673684685e-06</ixy>
-          <ixz>-1.3876354790554046e-05</ixz>
-          <iyy>0.1303611813000909</iyy>
-          <iyz>1.4294269790344344e-06</iyz>
-          <izz>0.24143130580426014</izz>
+          <ixx>0.1304</ixx>  <!-- 統一 -->
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.1304</iyy>  <!-- 統一 -->
+          <iyz>0</iyz>
+          <izz>0.2414</izz>  <!-- 統一 -->
         </inertia>
       </inertial>
       <visual name="right_wheel_visual">
@@ -494,14 +494,16 @@
       <parent>base_link</parent>
       <child>left_wheel</child>
       <axis>
-        <xyz>0 -1 0</xyz>
+        <xyz>0 1 0</xyz>
         <limit>
           <effort>100</effort>
           <velocity>100</velocity>
+          <lower>-1e16</lower>  <!-- 追加 -->
+          <upper>1e16</upper>   <!-- 追加 -->
         </limit>
         <dynamics>
-          <damping>5.0</damping>
-          <friction>2.0</friction>
+          <damping>0.05</damping>
+          <friction>0.0</friction>
         </dynamics>
       </axis>
     </joint>
@@ -514,10 +516,12 @@
         <limit>
           <effort>100</effort>
           <velocity>100</velocity>
+          <lower>-1e16</lower>  <!-- 追加 -->
+          <upper>1e16</upper>   <!-- 追加 -->
         </limit>
         <dynamics>
-          <damping>5.0</damping>
-          <friction>2.0</friction>
+          <damping>0.05</damping>
+          <friction>0.0</friction>
         </dynamics>
       </axis>
     </joint>
@@ -563,8 +567,10 @@
       <topic>cmd_vel</topic>    <!-- 速度指令のトピック名 -->
       <left_joint>left_wheel_joint</left_joint>    <!-- 左車輪のジョイント名 -->
       <right_joint>right_wheel_joint</right_joint>    <!-- 右車輪のジョイント名 -->
-      <wheel_separation>0.30</wheel_separation>    <!-- 車輪間距離 -->
-      <wheel_radius>0.0825</wheel_radius>    <!-- 車輪半径 -->
+      <wheel_separation>0.32</wheel_separation>    <!-- 車輪間距離 -->
+      <wheel_radius>0.1325</wheel_radius>    <!-- 車輪半径 -->
+      <max_wheel_torque>200</max_wheel_torque>    <!-- 最大トルク -->
+      <max_wheel_acceleration>5.0</max_wheel_acceleration>    <!-- 最大加速度 -->
       <odom_publish_frequency>50</odom_publish_frequency>    <!-- Odometry公開の頻度 -->
     </plugin>
 
