@@ -60,8 +60,8 @@
         <surface>
           <friction>
             <ode>
-              <mu>0.1</mu> <!-- すべり方向への摩擦係数 -->
-              <mu2>0.1</mu2> <!-- 法線方向への摩擦係数 -->
+              <mu>0.01</mu> <!-- すべり方向への摩擦係数 -->
+              <mu2>0.5</mu2> <!-- 法線方向への摩擦係数 -->
             </ode>
           </friction>
         </surface>
@@ -514,8 +514,8 @@
       <axis>
         <xyz>0 1 0</xyz>
         <limit>
-          <effort>100</effort>
-          <velocity>100</velocity>
+          <effort>100</effort> 
+          <velocity>100</velocity> <!-- 100 rad/s, 100 * 0.1325 = 13.25 m/s -->
           <lower>-1e16</lower>  <!-- 追加 -->
           <upper>1e16</upper>   <!-- 追加 -->
         </limit>
@@ -569,9 +569,9 @@
       <right_joint>right_wheel_joint</right_joint>    <!-- 右車輪のジョイント名 -->
       <wheel_separation>0.32</wheel_separation>    <!-- 車輪間距離 -->
       <wheel_radius>0.1325</wheel_radius>    <!-- 車輪半径 -->
-      <max_wheel_torque>2000</max_wheel_torque>    <!-- 最大トルク -->
+      <max_wheel_torque>1000</max_wheel_torque>    <!-- 最大トルク -->
       <max_wheel_acceleration>5.0</max_wheel_acceleration>    <!-- 最大加速度 -->
-      <odom_publish_frequency>50</odom_publish_frequency>    <!-- Odometry公開の頻度 -->
+      <odom_publish_frequency>40</odom_publish_frequency>    <!-- Odometry公開の頻度 -->
     </plugin>
 
     <!-- joint pub -->
