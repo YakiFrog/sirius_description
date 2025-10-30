@@ -127,6 +127,9 @@ def generate_launch_description_with_config(context, *args, **kwargs):
     # 4. ブリッジ類とrobot_state_publisher（5秒後）
     timer_actions_5sec = []
     
+    # TF Bridge（EKF使用時は無効化推奨）
+    # Note: EKFがIMU+Odomを融合してTF (odom→base_footprint) を配信する場合、
+    # このブリッジは競合するため無効化する必要があります
     if config['tf_bridge']:
         tf_bridge = Node(
             package='ros_gz_bridge',

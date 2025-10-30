@@ -22,7 +22,7 @@ class LaunchConfigUI(QMainWindow):
             'world_file': 'sirius_world.sdf',
             'spawn_robot': True,
             'robot_state_publisher': True,
-            'tf_bridge': True,
+            'tf_bridge': False,  # EKF使用時はFalse（IMU融合TFを使用）
             'odom_bridge': True,
             'twist_bridge': True,
             'joint_state_bridge': True,
@@ -119,16 +119,19 @@ class LaunchConfigUI(QMainWindow):
         self._add_checkbox(
             components_layout, 
             'tf_bridge', 
-            "TF Bridge", 
-            True,
-            "GazeboからROS 2へ座標変換（TF）情報をブリッジします"
+            "TF Bridge（⚠️ EKF使用時は無効化推奨）", 
+            False,  # デフォルトはFalse
+            "GazeboからROS 2へ座標変換（TF: odom→base_footprint）をブリッジします。\n"
+            "⚠️ EKFでセンサフュージョンを使用する場合は無効化してください（TF競合を防ぐため）。\n"
+            "EKFがIMU融合後のTFを配信します。"
         )
         self._add_checkbox(
             components_layout, 
             'odom_bridge', 
             "Odometry Bridge", 
             True,
-            "ロボットの位置・速度情報（オドメトリ）をGazeboからROS 2へブリッジします"
+            "ロボットの位置・速度情報（オドメトリ）をGazeboからROS 2へブリッジします。\n"
+            "EKFの入力データとして使用されます。"
         )
         self._add_checkbox(
             components_layout, 
@@ -173,7 +176,8 @@ class LaunchConfigUI(QMainWindow):
             'imu_bridge', 
             "IMU Bridge", 
             True,
-            "IMU（慣性計測装置）のデータをブリッジします。姿勢・加速度・角速度情報を取得"
+            "IMU（慣性計測装置）のデータをブリッジします。姿勢・加速度・角速度情報を取得。\n"
+            "EKFと組み合わせてオドメトリと融合することで、より正確な自己位置推定が可能です。"
         )
         self._add_checkbox(
             components_layout, 

@@ -572,6 +572,7 @@
       <max_wheel_torque>2000</max_wheel_torque>    <!-- 最大トルク -->
       <max_wheel_acceleration>5.0</max_wheel_acceleration>    <!-- 最大加速度 -->
       <odom_publish_frequency>50</odom_publish_frequency>    <!-- Odometry公開の頻度 -->
+      <odom_topic>/model/sirius3/odom</odom_topic>    <!-- Odometryトピック名（bridgeと一致）-->
     </plugin>
 
     <!-- joint pub -->

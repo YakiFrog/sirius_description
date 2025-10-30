@@ -111,24 +111,26 @@ def generate_launch_description():
         output='screen'
     )
     
-    # TFのros_gz_bridge
-    # Note: Gazeboから出力されるTFには既に sirius3/ プレフィックスが付いているため、
-    # /tf にリマップしてグローバルなTFツリーに統合します
-    tf_bridge = Node(
-        package='ros_gz_bridge',
-        executable='parameter_bridge',
-        arguments=[
-            '/model/sirius3/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V' # Gazebo <-> ROS2
-        ],
-        remappings=[
-            ('/model/sirius3/tf', '/tf')
-        ],
-        output='screen'
-    )
+    # TFのros_gz_bridge（EKF使用時はコメントアウト）
+    # Note: EKFがIMU融合後のTF (odom → base_footprint) を配信するため、
+    # GazeboのTFブリッジは不要（競合を避ける）
+    # ロボット固定のTF (base_link → sensors) はrobot_state_publisherが配信
+    # tf_bridge = Node(
+    #     package='ros_gz_bridge',
+    #     executable='parameter_bridge',
+    #     arguments=[
+    #         '/model/sirius3/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V' # Gazebo <-> ROS2
+    #     ],
+    #     remappings=[
+    #         ('/model/sirius3/tf', '/tf')
+    #     ],
+    #     output='screen'
+    # )
     
     # Odometryのros_gz_bridge
     # Note: Odometryメッセージのframe_idには既に sirius3/ プレフィックスが付いています
     # 単一ロボットの場合は /odom でOK、複数ロボットの場合は /sirius3/odom 推奨
+    # このトピックはEKFの入力として使用される
     odom_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -269,10 +271,11 @@ def generate_launch_description():
         ),
 
         # 4. 5秒後にブリッジ類とrobot_state_publisherを開始
+        # Note: tf_bridgeはEKFがTFを配信するためコメントアウト
         TimerAction(
             period=5.0,
             actions=[
-                tf_bridge,
+                # tf_bridge,  # EKF使用時は不要
                 odom_bridge,
                 twist_bridge,
                 robot_state_publisher,
