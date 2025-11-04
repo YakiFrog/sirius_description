@@ -12,17 +12,6 @@
     <!-- Base Footprint - ダミーリンク（質量なし） -->
     <link name="base_footprint">
       <!-- 空の慣性要素を持たないリンク（地面に接触する仮想的なリンク） -->
-      <!-- 外装（DAEモデル） - 見た目のみ -->
-      <visual name="exterior_visual">
-        <pose>-0.115 0.08 -0.01 0 0 3.14159265</pose> <!-- Z軸周りに180度回転 -->
-        <geometry>
-          <mesh>
-            <uri>../dae/sirius.dae</uri>
-            <scale>1 1 1</scale>
-          </mesh>
-        </geometry>
-        <!-- マテリアルタグを削除してDAEファイルのテクスチャを使用 -->
-      </visual>
     </link>
 
     <!-- Base Link -->
@@ -40,6 +29,19 @@
           <izz>2.5</izz> <!-- 増加: 2.14 → 2.5 -->
         </inertia>
       </inertial>
+      
+      <!-- 外装（DAEモデル） - 見た目のみ -->
+      <visual name="exterior_visual">
+        <pose>-0.115 0.08 -0.01 0 0 3.14159265</pose> <!-- Z軸周りに180度回転 -->
+        <geometry>
+          <mesh>
+            <uri>../dae/sirius.dae</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <!-- マテリアルタグを削除してDAEファイルのテクスチャを使用 -->
+      </visual>
+      
       <visual name="base_visual">
         <geometry>
           <mesh>

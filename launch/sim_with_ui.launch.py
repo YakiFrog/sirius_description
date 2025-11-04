@@ -34,6 +34,7 @@ def convert_sdf_to_urdf(sdf_file_path, pkg_path):
     
     urdf_content = result.stdout
     
+    # STLメッシュのパス変換
     urdf_content = urdf_content.replace(
         '../urdf/meshes/',
         f'file://{pkg_path}/urdf/meshes/'
@@ -42,6 +43,17 @@ def convert_sdf_to_urdf(sdf_file_path, pkg_path):
     urdf_content = urdf_content.replace(
         f'file://{pkg_path}/urdf/meshes/',
         'package://sirius_description/urdf/meshes/'
+    )
+    
+    # DAEメッシュのパス変換
+    urdf_content = urdf_content.replace(
+        '../dae/',
+        f'file://{pkg_path}/dae/'
+    )
+    
+    urdf_content = urdf_content.replace(
+        f'file://{pkg_path}/dae/',
+        'package://sirius_description/dae/'
     )
     
     return urdf_content
