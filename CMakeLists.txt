@@ -20,6 +20,7 @@ install(DIRECTORY
   sdf
   config
   worlds
+  dae
   DESTINATION share/${PROJECT_NAME}/
 )
 
