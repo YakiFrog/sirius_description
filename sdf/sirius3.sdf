@@ -282,6 +282,130 @@
       </sensor>
     </link>
 
+    <!-- Left Ear Link -->
+    <link name="ear_left">
+      <pose relative_to="lidar_link">0.025 0.25 -0.15 0 0 0</pose> <!-- LiDARの左側(Y+方向) -->
+      <inertial>
+        <mass>0.05</mass> <!-- 軽量 -->
+        <inertia>
+          <ixx>0.0001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0001</iyy>
+          <iyz>0</iyz>
+          <izz>0.0001</izz>
+        </inertia>
+      </inertial>
+      <visual name="ear_left_visual">
+        <pose>0 0 -0.02 0 0 0</pose> <!-- 少し下に配置して上部を削ぐ効果 -->
+        <geometry>
+          <cylinder>
+            <radius>0.08</radius>
+            <length>0.12</length> <!-- 高さを球体の直径より短く -->
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>1 0 0 1</ambient> <!-- 赤色 -->
+          <diffuse>1 0 0 1</diffuse>
+          <specular>1 0 0 1</specular>  <!-- 彩度アップ -->
+          <emissive>1 0 0 1</emissive> <!-- 発光効果を最大に -->
+        </material>
+      </visual>
+      <collision name="ear_left_collision">
+        <pose>0 0 -0.02 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.08</radius>
+            <length>0.12</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <!-- 左耳のスポットライト -->
+      <light name="ear_left_light" type="spot">
+        <pose>0 0 0 0 0 0</pose>
+        <diffuse>1 0 0 1</diffuse>  <!-- 赤色 -->
+        <specular>1 0 0 1</specular>  <!-- 彩度を高めるため赤色に -->
+        
+        <!-- スポットライトの方向と角度 -->
+        <direction>0.2 0.15 -1</direction>  <!-- ほぼ真下、少し左前に角度 -->
+        <spot>
+          <inner_angle>0.5</inner_angle>  <!-- 内側の角度 -->
+          <outer_angle>1.2</outer_angle>  <!-- 外側の角度 -->
+          <falloff>0.3</falloff> <!-- フォールオフ: 明るさの減衰率 -->
+        </spot>
+        
+        <attenuation>
+          <range>3</range>  <!-- 範囲を拡大 -->
+          <linear>0.01</linear>
+          <quadratic>0.001</quadratic>
+        </attenuation>
+        <cast_shadows>false</cast_shadows>
+      </light>
+    </link>
+
+    <!-- Right Ear Link -->
+    <link name="ear_right">
+      <pose relative_to="lidar_link">0.025 -0.25 -0.15 0 0 0</pose> <!-- LiDARの右側(Y-方向) -->
+      <inertial>
+        <mass>0.05</mass> <!-- 軽量 -->
+        <inertia>
+          <ixx>0.0001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0001</iyy>
+          <iyz>0</iyz>
+          <izz>0.0001</izz>
+        </inertia>
+      </inertial>
+      <visual name="ear_right_visual">
+        <pose>0 0 -0.02 0 0 0</pose> <!-- 少し下に配置して上部を削ぐ効果 -->
+        <geometry>
+          <cylinder>
+            <radius>0.08</radius>
+            <length>0.12</length> <!-- 高さを球体の直径より短く -->
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient> <!-- 青色 -->
+          <diffuse>0 0 1 1</diffuse>
+          <specular>0 0 1 1</specular>  <!-- 彩度アップ -->
+          <emissive>0 0 1 1</emissive> <!-- 発光効果を最大に -->
+        </material>
+      </visual>
+      <collision name="ear_right_collision">
+        <pose>0 0 -0.02 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.08</radius>
+            <length>0.12</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <!-- 右耳のスポットライト -->
+      <light name="ear_right_light" type="spot">
+        <pose>0 0 0 0 0 0</pose>
+        <diffuse>0 0 1 1</diffuse>  <!-- 青色 -->
+        <specular>0 0 1 1</specular>  <!-- 彩度を高めるため青色に -->
+        
+        <!-- スポットライトの方向と角度 -->
+        <direction>0.2 -0.15 -1</direction>  <!-- ほぼ真下、少し右前に角度 -->
+        <spot>
+          <inner_angle>0.5</inner_angle>  <!-- 内側の角度 -->
+          <outer_angle>1.2</outer_angle>  <!-- 外側の角度 -->
+          <falloff>0.3</falloff> <!-- フォールオフ: 明るさの減衰率 -->
+        </spot>
+        
+        <attenuation>
+          <range>5</range>  <!-- 範囲を拡大 -->
+          <linear>0.01</linear>
+          <quadratic>0.001</quadratic>
+        </attenuation>
+        <cast_shadows>false</cast_shadows>
+      </light>
+    </link>
+
     <!-- IMU Link -->
     <link name="imu_link">
       <pose relative_to="base_link">0 0 0.65 0 0 0</pose> <!-- Velodyne(0.85m)の20cm下 -->
@@ -543,6 +667,18 @@
     <joint name="lidar_joint" type="fixed">
       <parent>base_link</parent>
       <child>lidar_link</child>
+    </joint>
+
+    <!-- Left Ear Joint -->
+    <joint name="ear_left_joint" type="fixed">
+      <parent>lidar_link</parent>
+      <child>ear_left</child>
+    </joint>
+
+    <!-- Right Ear Joint -->
+    <joint name="ear_right_joint" type="fixed">
+      <parent>lidar_link</parent>
+      <child>ear_right</child>
     </joint>
 
     <!-- IMU Joint -->
