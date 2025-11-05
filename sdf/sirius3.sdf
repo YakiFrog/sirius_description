@@ -284,7 +284,7 @@
 
     <!-- Left Ear Link -->
     <link name="ear_left">
-      <pose relative_to="lidar_link">0.025 0.25 -0.15 0 0 0</pose> <!-- LiDARの左側(Y+方向) -->
+      <pose relative_to="lidar_link">0.025 0.23 -0.16 0 0 0</pose> <!-- LiDARの左側(Y+方向) -->
       <inertial>
         <mass>0.05</mass> <!-- 軽量 -->
         <inertia>
@@ -297,27 +297,25 @@
         </inertia>
       </inertial>
       <visual name="ear_left_visual">
-        <pose>0 0 -0.02 0 0 0</pose> <!-- 少し下に配置して上部を削ぐ効果 -->
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <cylinder>
-            <radius>0.08</radius>
-            <length>0.12</length> <!-- 高さを球体の直径より短く -->
-          </cylinder>
+          <sphere>
+            <radius>0.08</radius> <!-- 球で近似: 半径0.08m -->
+          </sphere>
         </geometry>
         <material>
           <ambient>1 0 0 1</ambient> <!-- 赤色 -->
-          <diffuse>1 0 0 1</diffuse>
+          <diffuse>1 0 0 1</diffuse> <!-- 赤色 -->
           <specular>1 0 0 1</specular>  <!-- 彩度アップ -->
           <emissive>1 0 0 1</emissive> <!-- 発光効果を最大に -->
         </material>
       </visual>
       <collision name="ear_left_collision">
-        <pose>0 0 -0.02 0 0 0</pose>
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <cylinder>
-            <radius>0.08</radius>
-            <length>0.12</length>
-          </cylinder>
+          <sphere>
+            <radius>0.075</radius>
+          </sphere>
         </geometry>
       </collision>
       
@@ -346,7 +344,7 @@
 
     <!-- Right Ear Link -->
     <link name="ear_right">
-      <pose relative_to="lidar_link">0.025 -0.25 -0.15 0 0 0</pose> <!-- LiDARの右側(Y-方向) -->
+      <pose relative_to="lidar_link">0.025 -0.25 -0.16 0 0 0</pose> <!-- LiDARの右側(Y-方向) -->
       <inertial>
         <mass>0.05</mass> <!-- 軽量 -->
         <inertia>
@@ -359,12 +357,11 @@
         </inertia>
       </inertial>
       <visual name="ear_right_visual">
-        <pose>0 0 -0.02 0 0 0</pose> <!-- 少し下に配置して上部を削ぐ効果 -->
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <cylinder>
-            <radius>0.08</radius>
-            <length>0.12</length> <!-- 高さを球体の直径より短く -->
-          </cylinder>
+          <sphere>
+            <radius>0.08</radius> <!-- 球で近似: 半径0.08m -->
+          </sphere>
         </geometry>
         <material>
           <ambient>0 0 1 1</ambient> <!-- 青色 -->
@@ -374,12 +371,11 @@
         </material>
       </visual>
       <collision name="ear_right_collision">
-        <pose>0 0 -0.02 0 0 0</pose>
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <cylinder>
-            <radius>0.08</radius>
-            <length>0.12</length>
-          </cylinder>
+          <sphere>
+            <radius>0.075</radius>
+          </sphere>
         </geometry>
       </collision>
       
