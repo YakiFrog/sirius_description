@@ -284,7 +284,7 @@
 
     <!-- Left Ear Link -->
     <link name="ear_left">
-      <pose relative_to="lidar_link">0.025 0.23 -0.16 0 0 0</pose> <!-- LiDARの左側(Y+方向) -->
+      <pose relative_to="lidar_link">0.025 0.23 -0.165 0 0 0</pose> <!-- LiDARの左側(Y+方向) -->
       <inertial>
         <mass>0.05</mass> <!-- 軽量 -->
         <inertia>
@@ -344,7 +344,7 @@
 
     <!-- Right Ear Link -->
     <link name="ear_right">
-      <pose relative_to="lidar_link">0.025 -0.25 -0.16 0 0 0</pose> <!-- LiDARの右側(Y-方向) -->
+      <pose relative_to="lidar_link">0.025 -0.25 -0.165 0 0 0</pose> <!-- LiDARの右側(Y-方向) -->
       <inertial>
         <mass>0.05</mass> <!-- 軽量 -->
         <inertia>
