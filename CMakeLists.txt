@@ -18,7 +18,6 @@ install(DIRECTORY
   launch
   rviz
   sdf
-  config
   worlds
   dae
   DESTINATION share/${PROJECT_NAME}/
