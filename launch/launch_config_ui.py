@@ -32,7 +32,9 @@ class LaunchConfigUI(QMainWindow):
             'velodyne_bridge': True,
             'clock_bridge': True,
             'teleop': True,
-            'rviz': True
+            'rviz': True,
+            'headless': False,
+            'run_on_start': True
         }
         self.launched = False
         self.init_ui()
@@ -209,6 +211,21 @@ class LaunchConfigUI(QMainWindow):
             "RViz2", 
             True,
             "ROS 2の可視化ツールを起動します。センサーデータやロボットの状態を確認できます"
+        )
+        # Gazeboをヘッドレス（サーバのみ）で起動するオプション
+        self._add_checkbox(
+            components_layout,
+            'headless',
+            "Gazebo: Headless (サーバのみ起動)",
+            False,
+            "Gazeboをサーバ（GUIなし）で起動します。起動オプション: gz sim -s"
+        )
+        self._add_checkbox(
+            components_layout,
+            'run_on_start',
+            "Gazebo: 起動時にシミュレーションを開始 (gz sim -r)",
+            True,
+            "gz sim -r オプションで、起動と同時にシミュレーションを実行します"
         )
         
         components_group.setLayout(components_layout)

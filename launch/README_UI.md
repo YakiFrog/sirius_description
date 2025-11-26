@@ -46,6 +46,8 @@ ros2 launch sirius_description sim_with_ui.launch.py
 **ツール:**
 - Teleopキーボードコントロール
 - RViz2
+ - Gazebo Headless (サーバのみ起動)
+ - Gazebo: 起動時にシミュレーションを開始 (gz sim -r)
 
 ## 依存関係
 

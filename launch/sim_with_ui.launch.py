@@ -19,9 +19,6 @@ from ament_index_python.packages import get_package_share_directory
 launch_dir = Path(__file__).parent
 sys.path.insert(0, str(launch_dir))
 
-# UIモジュールをインポート
-from launch_config_ui import show_launch_config_ui
-
 
 def convert_sdf_to_urdf(sdf_file_path, pkg_path):
     """SDFファイルをURDFに変換し、メッシュパスを修正"""
@@ -59,8 +56,27 @@ def convert_sdf_to_urdf(sdf_file_path, pkg_path):
     return urdf_content
 
 
+def build_gz_command(world_sdf_file, config):
+    """Build the gz sim command list from world path and config options.
+
+    Returns a list suitable for ExecuteProcess 'cmd' parameter.
+    """
+    cmd = ['gz', 'sim']
+    # -s: Run only the server (headless)
+    if config.get('headless', False):
+        cmd.append('-s')
+    # -r: Run simulation immediately on start
+    if config.get('run_on_start', False):
+        cmd.append('-r')
+    cmd.append(world_sdf_file)
+    return cmd
+
+
 def generate_launch_description_with_config(context, *args, **kwargs):
     """設定に基づいてLaunchDescriptionを生成"""
+    # UIモジュールのインポート（PySide6等の依存があるため、遅延import）
+    from launch_config_ui import show_launch_config_ui
+
     # UIから設定を取得
     config = show_launch_config_ui()
     
@@ -99,7 +115,7 @@ def generate_launch_description_with_config(context, *args, **kwargs):
     
     # 1. 環境（world）のGazeboシミュレーション起動（常に起動）
     gazebo_world = ExecuteProcess(
-        cmd=['gz', 'sim', world_sdf_file],
+        cmd=build_gz_command(world_sdf_file, config),
         output='screen',
         shell=False
     )
