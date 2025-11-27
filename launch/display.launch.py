@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import os
+import subprocess
+import shutil
+import logging
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.conditions import IfCondition
@@ -14,8 +17,43 @@ def generate_launch_description():
     # Get the path to the package
     pkg_path = get_package_share_directory('sirius_description')
     
-    # Path to the URDF file
+    # Path to the URDF (xacro) file and SDF file (fallback if URDF is missing)
     urdf_file_path = os.path.join(pkg_path, 'urdf', 'sirius3.urdf.xacro')
+    robot_sdf_file_abs = os.path.join(pkg_path, 'sdf', 'sirius3.sdf')
+
+    log = logging.getLogger('display_launch')
+
+    def convert_sdf_to_urdf(sdf_file_path, pkg_path):
+        """Convert an SDF file to URDF using available sdftool (gz sdf -p, gzsdf, or sdformat).
+
+        The function tries several common commands and updates mesh paths to package:// form.
+        It raises RuntimeError if conversion fails or if no tool is found.
+        """
+        # prefer `gz sdf -p` (Ignition/Gazebo)
+        candidates = [['gz', 'sdf', '-p', sdf_file_path], ['gzsdf', 'print', sdf_file_path], ['sdformat', 'print', sdf_file_path]]
+
+        last_err = None
+        for cmd in candidates:
+            if shutil.which(cmd[0]) is None:
+                continue
+            try:
+                result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+                urdf_content = result.stdout
+
+                # try to normalize mesh paths – replace relative/absolute with package:// path
+                urdf_content = urdf_content.replace('../urdf/meshes/', f'file://{pkg_path}/urdf/meshes/')
+                urdf_content = urdf_content.replace(f'file://{pkg_path}/urdf/meshes/', 'package://sirius_description/urdf/meshes/')
+
+                # DAE (collada) files are sometimes referenced from ../dae/
+                urdf_content = urdf_content.replace('../dae/', f'file://{pkg_path}/dae/')
+                urdf_content = urdf_content.replace(f'file://{pkg_path}/dae/', 'package://sirius_description/dae/')
+
+                return urdf_content
+            except subprocess.CalledProcessError as e:
+                last_err = e
+                log.debug('Conversion attempt failed with %s: %s', cmd, e)
+
+        raise RuntimeError('Failed to convert SDF to URDF. Tried commands and failed: {}'.format(last_err))
     
     # Path to the RViz config file
     rviz_config_path = os.path.join(pkg_path, 'rviz', 'sirius_robot.rviz')
@@ -33,15 +71,26 @@ def generate_launch_description():
         description='Start joint_state_publisher_gui if true'
     )
     
+    # Decide how to obtain robot_description (xacro URDF preferred, otherwise convert SDF)
+    if os.path.exists(urdf_file_path):
+        robot_description_value = Command(['xacro ', urdf_file_path, ' prefix:=sirius3/'])
+    elif os.path.exists(robot_sdf_file_abs):
+        try:
+            robot_description_value = str(convert_sdf_to_urdf(robot_sdf_file_abs, pkg_path))
+        except Exception as e:
+            log.error('Failed to build URDF from SDF: %s', e)
+            raise
+    else:
+        raise FileNotFoundError('No URDF xacro file or SDF file found in package: {}'.format(pkg_path))
+
     # Robot State Publisher
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         parameters=[{
-            'robot_description': ParameterValue(
-                Command(['xacro ', urdf_file_path, ' prefix:=sirius3/']),
-                value_type=str
-            ),
+            # provide robot_description (computed above)
+            'robot_description': ParameterValue(robot_description_value, value_type=str),
+            'frame_prefix': 'sirius3/',
             'use_sim_time': LaunchConfiguration('use_sim_time')
         }]
     )
@@ -80,6 +129,6 @@ def generate_launch_description():
         use_gui_arg,
         robot_state_publisher,
         joint_state_publisher,
-        joint_state_publisher_gui,
+        # joint_state_publisher_gui,
         rviz2
     ])
