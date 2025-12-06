@@ -140,10 +140,10 @@ def generate_launch_description_with_config(context, *args, **kwargs):
             arguments=[
                 '-file', robot_sdf_file,
                 '-name', 'sirius3',
-                '-x', '0.0',
-                '-y', '0.0', 
-                '-z', '0.0825',
-                '-Y', '1.5708'
+                '-x', str(config.get('spawn_x', 0.0)),
+                '-y', str(config.get('spawn_y', 0.0)), 
+                '-z', str(config.get('spawn_z', 0.0825)),
+                '-Y', str(config.get('spawn_yaw', 1.5708))
             ],
             output='screen'
         )

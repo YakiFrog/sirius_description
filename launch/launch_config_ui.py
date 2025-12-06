@@ -8,7 +8,8 @@ import os
 import sys
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
                                QHBoxLayout, QCheckBox, QPushButton, QComboBox, 
-                               QLabel, QGroupBox, QTextEdit)
+                               QLabel, QGroupBox, QTextEdit, QDoubleSpinBox, QGridLayout,
+                               QScrollArea)
 from PySide6.QtCore import Qt, QEvent
 from ament_index_python.packages import get_package_share_directory
 
@@ -21,6 +22,10 @@ class LaunchConfigUI(QMainWindow):
         self.config = {
             'world_file': 'sirius_world.sdf',
             'spawn_robot': True,
+            'spawn_x': 0.0,
+            'spawn_y': 0.0,
+            'spawn_z': 0.0825,
+            'spawn_yaw': 1.5708,  # 90度 (π/2)
             'robot_state_publisher': True,
             'tf_bridge': False,  # EKF使用時はFalse（IMU融合TFを使用）
             'odom_bridge': True,
@@ -46,19 +51,36 @@ class LaunchConfigUI(QMainWindow):
         
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
-        layout = QVBoxLayout(central_widget)
+        main_layout = QVBoxLayout(central_widget)
+        main_layout.setContentsMargins(5, 5, 5, 5)
+        
+        # スクロールエリアを作成
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        
+        # スクロール内のコンテンツウィジェット
+        scroll_content = QWidget()
+        scroll_layout = QVBoxLayout(scroll_content)
         
         # ワールド選択セクション
-        layout.addWidget(self._create_world_selection_group())
+        scroll_layout.addWidget(self._create_world_selection_group())
+        
+        # スポーン座標設定セクション
+        scroll_layout.addWidget(self._create_spawn_position_group())
         
         # コンポーネント選択セクション
-        layout.addWidget(self._create_components_group())
+        scroll_layout.addWidget(self._create_components_group())
         
         # 説明表示エリア
-        layout.addWidget(self._create_description_area())
+        scroll_layout.addWidget(self._create_description_area())
         
-        # 起動ボタン
-        layout.addLayout(self._create_launch_button())
+        # スクロールエリアにコンテンツを設定
+        scroll_area.setWidget(scroll_content)
+        main_layout.addWidget(scroll_area)
+        
+        # 起動ボタン（スクロール外、常に下部に固定）
+        main_layout.addLayout(self._create_launch_button())
         
     def _create_world_selection_group(self):
         """ワールド選択グループの作成"""
@@ -91,6 +113,62 @@ class LaunchConfigUI(QMainWindow):
         world_group.setLayout(world_layout)
         
         return world_group
+    
+    def _create_spawn_position_group(self):
+        """スポーン座標設定グループの作成"""
+        spawn_group = QGroupBox("ロボットスポーン座標")
+        spawn_layout = QGridLayout()
+        
+        # X座標
+        x_label = QLabel("X [m]:")
+        self.spawn_x_spin = QDoubleSpinBox()
+        self.spawn_x_spin.setRange(-5000.0, 5000.0)
+        self.spawn_x_spin.setDecimals(2)
+        self.spawn_x_spin.setSingleStep(0.5)
+        self.spawn_x_spin.setValue(self.config['spawn_x'])
+        self.spawn_x_spin.description = "ロボットのX座標（前後方向）[m]"
+        self.spawn_x_spin.installEventFilter(self)
+        spawn_layout.addWidget(x_label, 0, 0)
+        spawn_layout.addWidget(self.spawn_x_spin, 0, 1)
+        
+        # Y座標
+        y_label = QLabel("Y [m]:")
+        self.spawn_y_spin = QDoubleSpinBox()
+        self.spawn_y_spin.setRange(-5000.0, 5000.0)
+        self.spawn_y_spin.setDecimals(2)
+        self.spawn_y_spin.setSingleStep(0.5)
+        self.spawn_y_spin.setValue(self.config['spawn_y'])
+        self.spawn_y_spin.description = "ロボットのY座標（左右方向）[m]"
+        self.spawn_y_spin.installEventFilter(self)
+        spawn_layout.addWidget(y_label, 0, 2)
+        spawn_layout.addWidget(self.spawn_y_spin, 0, 3)
+        
+        # Z座標
+        z_label = QLabel("Z [m]:")
+        self.spawn_z_spin = QDoubleSpinBox()
+        self.spawn_z_spin.setRange(-10.0, 10.0)
+        self.spawn_z_spin.setDecimals(4)
+        self.spawn_z_spin.setSingleStep(0.01)
+        self.spawn_z_spin.setValue(self.config['spawn_z'])
+        self.spawn_z_spin.description = "ロボットのZ座標（高さ）[m]。地面からの高さを設定"
+        self.spawn_z_spin.installEventFilter(self)
+        spawn_layout.addWidget(z_label, 1, 0)
+        spawn_layout.addWidget(self.spawn_z_spin, 1, 1)
+        
+        # Yaw角度
+        yaw_label = QLabel("Yaw [rad]:")
+        self.spawn_yaw_spin = QDoubleSpinBox()
+        self.spawn_yaw_spin.setRange(-3.1416, 3.1416)
+        self.spawn_yaw_spin.setDecimals(4)
+        self.spawn_yaw_spin.setSingleStep(0.1)
+        self.spawn_yaw_spin.setValue(self.config['spawn_yaw'])
+        self.spawn_yaw_spin.description = "ロボットの向き（Yaw角）[rad]。0=+X方向、π/2≈1.57=+Y方向"
+        self.spawn_yaw_spin.installEventFilter(self)
+        spawn_layout.addWidget(yaw_label, 1, 2)
+        spawn_layout.addWidget(self.spawn_yaw_spin, 1, 3)
+        
+        spawn_group.setLayout(spawn_layout)
+        return spawn_group
     
     def _create_components_group(self):
         """コンポーネント選択グループの作成"""
@@ -310,6 +388,13 @@ class LaunchConfigUI(QMainWindow):
         """起動ボタンがクリックされた時の処理"""
         # 設定を保存
         self.config['world_file'] = self.world_combo.currentText()
+        
+        # スポーン座標を保存
+        self.config['spawn_x'] = self.spawn_x_spin.value()
+        self.config['spawn_y'] = self.spawn_y_spin.value()
+        self.config['spawn_z'] = self.spawn_z_spin.value()
+        self.config['spawn_yaw'] = self.spawn_yaw_spin.value()
+        
         for key, checkbox in self.checkboxes.items():
             self.config[key] = checkbox.isChecked()
         
