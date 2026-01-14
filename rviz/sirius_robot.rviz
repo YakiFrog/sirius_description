@@ -6,11 +6,14 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /scan1
+        - /scan1/Status1
+        - /hokuyo_scan1
+        - /hokuyo_scan1/Status1
         - /Amcl Particle Swarm1/Topic1
         - /PointCloud21/Topic1
-        - /Odometry1
       Splitter Ratio: 0.5
-    Tree Height: 439
+    Tree Height: 860
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -137,8 +140,6 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        map:
-          Value: true
         sirius3/base_footprint:
           Value: true
         sirius3/base_link:
@@ -171,28 +172,27 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        map:
-          sirius3/odom:
-            sirius3/base_footprint:
-              sirius3/base_link:
-                sirius3/imu_link:
+        sirius3/odom:
+          sirius3/base_footprint:
+            sirius3/base_link:
+              sirius3/imu_link:
+                {}
+              sirius3/left_wheel:
+                {}
+              sirius3/lidar_link:
+                sirius3/ear_left:
                   {}
-                sirius3/left_wheel:
+                sirius3/ear_right:
                   {}
-                sirius3/lidar_link:
-                  sirius3/ear_left:
-                    {}
-                  sirius3/ear_right:
-                    {}
-                sirius3/lidar_link2:
+              sirius3/lidar_link2:
+                {}
+              sirius3/realsense_link:
+                sirius3/realsense_color_optical_frame:
                   {}
-                sirius3/realsense_link:
-                  sirius3/realsense_color_optical_frame:
-                    {}
-                  sirius3/realsense_depth_optical_frame:
-                    {}
-                sirius3/right_wheel:
+                sirius3/realsense_depth_optical_frame:
                   {}
+              sirius3/right_wheel:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -225,7 +225,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /scan
+        Value: /scan3
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -275,12 +275,12 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: Intensity
       Decay Time: 0
-      Enabled: false
+      Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 0
+      Max Intensity: 1
       Min Color: 0; 0; 0
-      Min Intensity: 0
+      Min Intensity: 1
       Name: velodyne_points
       Position Transformer: XYZ
       Selectable: true
@@ -295,7 +295,7 @@ Visualization Manager:
         Value: /velodyne_points
       Use Fixed Frame: true
       Use rainbow: true
-      Value: false
+      Value: true
     - Alpha: 0.699999988079071
       Binary representation: false
       Binary threshold: 100
@@ -675,7 +675,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: map
+    Fixed Frame: sirius3/odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -711,21 +711,26 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -1.5700000524520874
-      Class: rviz_default_plugins/TopDownOrtho
+      Class: rviz_default_plugins/XYOrbit
+      Distance: 12.588945388793945
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
+      Focal Point:
+        X: -0.7658851146697998
+        Y: 0.43149447441101074
+        Z: -1.430511474609375e-06
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 133.5719451904297
+      Pitch: 0.44000011682510376
       Target Frame: sirius3/base_footprint
-      Value: TopDownOrtho (rviz_default_plugins)
-      X: 0
-      Y: 0
+      Value: XYOrbit (rviz_default_plugins)
+      Yaw: 3.2666003704071045
     Saved:
       - Angle: -1.5700000524520874
         Class: rviz_default_plugins/TopDownOrtho
@@ -764,15 +769,15 @@ Visualization Manager:
         Yaw: 3.141592025756836
 Window Geometry:
   Displays:
-    collapsed: true
+    collapsed: false
   Height: 1011
-  Hide Left Dock: true
+  Hide Left Dock: false
   Hide Right Dock: true
   Image:
     collapsed: false
   Navigation 2:
     collapsed: true
-  QMainWindow State: 000000ff00000000fd0000000200000000000001db00000399fc0200000008fb000000100044006900730070006c006100790073000000003d00000399000000cc00fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005d00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005d00fffffffb0000001000530065006c006500630074006f00720000000310000000c6000000d300fffffffb0000000c00430061006d006500720061000000030b000000cb0000000000000000fb0000000c00430061006d006500720061010000030b000000cb0000000000000000fb0000000a0049006d00610067006500000002770000015d0000001700fffffffb0000000c00430061006d00650072006101000002e0000000f60000000000000000000000010000018700000395fc0200000002fb0000000a00560069006500770073000000003f00000197000000a900fffffffb00000018004e0061007600690067006100740069006f006e0020003200000001dc000001f8000001f800ffffff0000039f0000039500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000200000000000001db00000399fc0200000008fb000000100044006900730070006c006100790073010000003d00000399000000c900fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005c00fffffffb0000001000530065006c006500630074006f00720000000310000000c6000000c600fffffffb0000000c00430061006d006500720061000000030b000000cb0000000000000000fb0000000c00430061006d006500720061010000030b000000cb0000000000000000fb0000000a0049006d00610067006500000002770000015d0000001600fffffffb0000000c00430061006d00650072006101000002e0000000f60000000000000000000000010000018700000399fc0200000002fb0000000a00560069006500770073000000003d000001b4000000a400fffffffb00000018004e0061007600690067006100740069006f006e0020003200000001f7000001df000001df00ffffff000001be0000039900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Selector:
@@ -782,5 +787,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 927
-  X: 66
+  X: 993
   Y: 32
