@@ -623,6 +623,8 @@
       <pose>0 0 0 0 0 0</pose>
     </joint>
 
+    </joint>
+
     <joint name="left_wheel_joint" type="revolute">
       <parent>base_link</parent>
       <child>left_wheel</child>
