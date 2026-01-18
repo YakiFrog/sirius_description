@@ -38,7 +38,7 @@ ros2 launch sirius_description sim_with_ui.launch.py
 - Clock Bridge
 
 **センサー:**
-- LiDAR Bridge (/scan)
+- LiDAR Bridge (/scan3)
 - LiDAR2 Bridge (/hokuyo_scan)
 - IMU Bridge
 - Velodyne Bridge (3D LiDAR)

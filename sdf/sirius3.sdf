@@ -217,7 +217,7 @@
       <!-- 2Dスキャンセンサー -->
       <sensor name="scan_laser" type="gpu_lidar">
           <pose>0 0 0 0 0 0</pose>
-          <topic>scan</topic>
+          <topic>scan3</topic>
           <update_rate>10</update_rate>
           <!-- 大事：これがなければ、frameID: sirius3/lidar_link/lidarになる -->
           <gz_frame_id>sirius3/lidar_link</gz_frame_id>

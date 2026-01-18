@@ -176,7 +176,7 @@ def generate_launch_description():
     lidar_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'], # Gazebo -> ROS2
+        arguments=['/scan3@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'], # Gazebo -> ROS2
         output='screen'
     )
 

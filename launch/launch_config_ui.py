@@ -240,9 +240,9 @@ class LaunchConfigUI(QMainWindow):
         self._add_checkbox(
             components_layout, 
             'lidar_bridge', 
-            "Velodyne Bridge (/scan)", 
+            "LiDAR Bridge (/scan3)", 
             True,
-            "2D LiDARセンサーのデータ（/scan）をGazeboからROS 2へブリッジします。"
+            "2D LiDARセンサーのデータ（/scan3）をGazeboからROS 2へブリッジします。"
         )
         self._add_checkbox(
             components_layout, 

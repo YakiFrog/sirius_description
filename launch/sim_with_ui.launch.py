@@ -216,7 +216,7 @@ def generate_launch_description_with_config(context, *args, **kwargs):
         lidar_bridge = Node(
             package='ros_gz_bridge',
             executable='parameter_bridge',
-            arguments=['/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'],
+            arguments=['/scan3@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'],
             output='screen'
         )
         timer_actions_5sec.append(lidar_bridge)
