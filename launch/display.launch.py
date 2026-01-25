@@ -69,6 +69,15 @@ def generate_launch_description():
         }]
     )
     
+    # Joint State Publisher (for manual control of joints in RViz)
+    joint_state_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        parameters=[{
+            'use_sim_time': LaunchConfiguration('use_sim_time')
+        }]
+    )
+    
     # RViz2
     rviz2 = Node(
         package='rviz2',
@@ -82,5 +91,6 @@ def generate_launch_description():
     return LaunchDescription([
         use_sim_time_arg,
         robot_state_publisher,
+        joint_state_publisher,
         rviz2
     ])
