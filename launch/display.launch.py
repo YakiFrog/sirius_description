@@ -71,6 +71,12 @@ def generate_launch_description():
         description='Start joint_state_publisher_gui if true'
     )
     
+    use_dummy_joint_arg = DeclareLaunchArgument(
+        'use_dummy_joint',
+        default_value='false',
+        description='Start dummy joint_state_publisher (disable when using Unity/Gazebo)'
+    )
+    
     # Decide how to obtain robot_description (xacro URDF preferred, otherwise convert SDF)
     if os.path.exists(urdf_file_path):
         robot_description_value = Command(['xacro ', urdf_file_path, ' prefix:=sirius3/'])
@@ -101,7 +107,8 @@ def generate_launch_description():
         executable='joint_state_publisher',
         parameters=[{
             'use_sim_time': LaunchConfiguration('use_sim_time')
-        }]
+        }],
+        condition=IfCondition(LaunchConfiguration('use_dummy_joint'))
     )
     
     # Joint State Publisher GUI (optional - for interactive joint control)
@@ -127,8 +134,9 @@ def generate_launch_description():
     return LaunchDescription([
         use_sim_time_arg,
         use_gui_arg,
+        use_dummy_joint_arg,
         robot_state_publisher,
         joint_state_publisher,
-        # joint_state_publisher_gui,
+        joint_state_publisher_gui,
         rviz2
     ])
