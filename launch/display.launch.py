@@ -137,6 +137,6 @@ def generate_launch_description():
         use_dummy_joint_arg,
         robot_state_publisher,
         joint_state_publisher,
-        joint_state_publisher_gui,
+        # joint_state_publisher_gui,
         rviz2
     ])
