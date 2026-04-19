@@ -141,6 +141,8 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        map:
+          Value: true
         sirius3/base_footprint:
           Value: true
         sirius3/base_link:
@@ -156,6 +158,8 @@ Visualization Manager:
         sirius3/lidar_link:
           Value: true
         sirius3/lidar_link2:
+          Value: true
+        sirius3/odom:
           Value: true
         sirius3/realsense_color_optical_frame:
           Value: true
@@ -173,28 +177,30 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        sirius3/base_footprint:
-          sirius3/base_link:
-            sirius3/imu_link:
-              {}
-            sirius3/left_wheel:
-              {}
-            sirius3/lidar_link:
-              sirius3/ear_left:
-                {}
-              sirius3/ear_right:
-                {}
-            sirius3/lidar_link2:
-              {}
-            sirius3/realsense_link:
-              sirius3/realsense_color_optical_frame:
-                {}
-              sirius3/realsense_depth_optical_frame:
-                {}
-            sirius3/right_wheel:
-              {}
-            sirius3/zed_camera_link:
-              {}
+        map:
+          sirius3/odom:
+            sirius3/base_footprint:
+              sirius3/base_link:
+                sirius3/imu_link:
+                  {}
+                sirius3/left_wheel:
+                  {}
+                sirius3/lidar_link:
+                  sirius3/ear_left:
+                    {}
+                  sirius3/ear_right:
+                    {}
+                sirius3/lidar_link2:
+                  {}
+                sirius3/realsense_link:
+                  sirius3/realsense_color_optical_frame:
+                    {}
+                  sirius3/realsense_depth_optical_frame:
+                    {}
+                sirius3/right_wheel:
+                  {}
+                sirius3/zed_camera_link:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -696,7 +702,7 @@ Visualization Manager:
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.05000000074505806
+      Size (m): 0.019999999552965164
       Style: Flat Squares
       Topic:
         Depth: 5
@@ -729,7 +735,7 @@ Visualization Manager:
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.05000000074505806
+      Size (m): 0.019999999552965164
       Style: Flat Squares
       Topic:
         Depth: 5
@@ -743,7 +749,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: sirius3/base_footprint
+    Fixed Frame: sirius3/odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -780,7 +786,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/XYOrbit
-      Distance: 11.0352201461792
+      Distance: 7.411901950836182
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -795,10 +801,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.3697974681854248
+      Pitch: 0.19979672133922577
       Target Frame: sirius3/base_footprint
       Value: XYOrbit (rviz_default_plugins)
-      Yaw: 3.607382297515869
+      Yaw: 3.0673811435699463
     Saved:
       - Angle: -1.5700000524520874
         Class: rviz_default_plugins/TopDownOrtho
