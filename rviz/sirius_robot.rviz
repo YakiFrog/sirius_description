@@ -8,6 +8,7 @@ Panels:
         - /Status1
         - /Amcl Particle Swarm1/Topic1
         - /PointCloud21/Topic1
+        - /PointCloud24
       Splitter Ratio: 0.49878934025764465
     Tree Height: 885
   - Class: rviz_common/Selection
@@ -702,7 +703,7 @@ Visualization Manager:
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.019999999552965164
+      Size (m): 0.029999999329447746
       Style: Flat Squares
       Topic:
         Depth: 5
@@ -713,7 +714,7 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
-    - Alpha: 1
+    - Alpha: 0.5
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
         Max Value: 10
@@ -746,10 +747,66 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 0.699999988079071
+      Binary representation: false
+      Binary threshold: 100
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rtabmap/grid_map
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rtabmap/grid_map_updates
+      Use Timestamp: false
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: RGB8
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.05000000074505806
+      Style: Flat Squares
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /cloud_map
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: sirius3/odom
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -785,26 +842,21 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz_default_plugins/XYOrbit
-      Distance: 7.411901950836182
+      Angle: -1.5850000381469727
+      Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
-      Focal Point:
-        X: 0.6787889003753662
-        Y: -0.7728210687637329
-        Z: 2.0169100167777287e-08
-      Focal Shape Fixed Size: true
-      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.19979672133922577
+      Scale: 95.9417495727539
       Target Frame: sirius3/base_footprint
-      Value: XYOrbit (rviz_default_plugins)
-      Yaw: 3.0673811435699463
+      Value: TopDownOrtho (rviz_default_plugins)
+      X: 0.38913124799728394
+      Y: -0.10005269944667816
     Saved:
       - Angle: -1.5700000524520874
         Class: rviz_default_plugins/TopDownOrtho
@@ -841,17 +893,32 @@ Visualization Manager:
         Target Frame: sirius3/base_footprint
         Value: XYOrbit (rviz_default_plugins)
         Yaw: 3.141592025756836
+      - Angle: -1.5700000524520874
+        Class: rviz_default_plugins/TopDownOrtho
+        Enable Stereo Rendering:
+          Stereo Eye Separation: 0.05999999865889549
+          Stereo Focal Distance: 1
+          Swap Stereo Eyes: false
+          Value: false
+        Invert Z Axis: false
+        Name: TopDownOrtho
+        Near Clip Distance: 0.009999999776482582
+        Scale: 76.48417663574219
+        Target Frame: sirius3/base_footprint
+        Value: TopDownOrtho (rviz_default_plugins)
+        X: 0.6319484114646912
+        Y: -0.3133222758769989
 Window Geometry:
   Displays:
-    collapsed: false
+    collapsed: true
   Height: 1043
-  Hide Left Dock: false
+  Hide Left Dock: true
   Hide Right Dock: true
   Image:
     collapsed: false
   Navigation 2:
     collapsed: true
-  QMainWindow State: 000000ff00000000fd00000002000000000000019f000003b5fc0200000008fb000000100044006900730070006c006100790073010000003f000003b5000000cc00fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005d00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005d00fffffffb0000001000530065006c006500630074006f00720000000310000000c6000000d300fffffffb0000000c00430061006d006500720061000000030b000000cb0000000000000000fb0000000c00430061006d006500720061010000030b000000cb0000000000000000fb0000000a0049006d00610067006500000002770000015d0000001700fffffffb0000000c00430061006d00650072006101000002e0000000f600000000000000000000000100000187000003b5fc0200000002fb0000000a00560069006500770073000000003f000000ed000000a900fffffffb00000018004e0061007600690067006100740069006f006e002000320000000132000002c2000001f800ffffff000005db000003b500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000002000000000000019f000003b5fc0200000008fb000000100044006900730070006c006100790073000000003f000003b5000000cc00fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005d00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005d00fffffffb0000001000530065006c006500630074006f00720000000310000000c6000000d300fffffffb0000000c00430061006d006500720061000000030b000000cb0000000000000000fb0000000c00430061006d006500720061010000030b000000cb0000000000000000fb0000000a0049006d00610067006500000002770000015d0000001700fffffffb0000000c00430061006d00650072006101000002e0000000f600000000000000000000000100000187000003b5fc0200000002fb0000000a00560069006500770073000000003f000001b7000000a900fffffffb00000018004e0061007600690067006100740069006f006e0020003200000001fc000001f8000001f800ffffff000003c0000003b500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Selector:
@@ -860,6 +927,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: true
-  Width: 1920
-  X: 0
+  Width: 960
+  X: 960
   Y: 0
