@@ -9,7 +9,7 @@ Panels:
         - /Amcl Particle Swarm1/Topic1
         - /Controller1/Local Costmap1/Position1
         - /PointCloud21/Topic1
-        - /static_colored_map1
+        - /npc_odom_gt1/Shape1
       Splitter Ratio: 0.49878934025764465
     Tree Height: 885
   - Class: rviz_common/Selection
@@ -870,6 +870,84 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz_default_plugins/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 1
+      Name: npc_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Axes
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /npc/odom
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz_default_plugins/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 1
+      Name: npc_odom_gt
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Axes
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /npc/odom_gt
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -909,7 +987,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -1.5799996852874756
+      Angle: -1.5299993753433228
       Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -919,7 +997,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 59.229347229003906
+      Scale: 66.76133728027344
       Target Frame: map
       Value: TopDownOrtho (rviz_default_plugins)
       X: 0
@@ -977,15 +1055,15 @@ Visualization Manager:
         Y: -0.3133222758769989
 Window Geometry:
   Displays:
-    collapsed: false
+    collapsed: true
   Height: 1043
-  Hide Left Dock: false
+  Hide Left Dock: true
   Hide Right Dock: true
   Image:
     collapsed: false
   Navigation 2:
     collapsed: true
-  QMainWindow State: 000000ff00000000fd00000002000000000000019f000003b5fc0200000008fb000000100044006900730070006c006100790073010000003f000003b5000000cc00fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005d00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005d00fffffffb0000001000530065006c006500630074006f00720000000310000000c6000000d300fffffffb0000000c00430061006d006500720061000000030b000000cb0000000000000000fb0000000c00430061006d006500720061010000030b000000cb0000000000000000fb0000000a0049006d00610067006500000002770000015d0000001700fffffffb0000000c00430061006d00650072006101000002e0000000f600000000000000000000000100000187000003b5fc0200000002fb0000000a00560069006500770073000000003f000001b7000000a900fffffffb00000018004e0061007600690067006100740069006f006e0020003200000001fc000001f8000001f800ffffff0000021b000003b500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000002000000000000019f000003b5fc0200000008fb000000100044006900730070006c006100790073000000003f000003b5000000cc00fffffffb0000001200530065006c0065006300740069006f006e0000000135000000760000005d00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000016e000000910000005d00fffffffb0000001000530065006c006500630074006f00720000000310000000c6000000d300fffffffb0000000c00430061006d006500720061000000030b000000cb0000000000000000fb0000000c00430061006d006500720061010000030b000000cb0000000000000000fb0000000a0049006d00610067006500000002770000015d0000001700fffffffb0000000c00430061006d00650072006101000002e0000000f600000000000000000000000100000187000003b5fc0200000002fb0000000a00560069006500770073000000003f000001b7000000a900fffffffb00000018004e0061007600690067006100740069006f006e0020003200000001fc000001f8000001f800ffffff000003c0000003b500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Selector:
