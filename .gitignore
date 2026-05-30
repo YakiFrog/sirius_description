@@ -1,3 +1,5 @@
-.venvmeshes/*.stl
-
+.venv
 meshes/*.stl
+__pycache__/
+*.pyc
+*.pyo
