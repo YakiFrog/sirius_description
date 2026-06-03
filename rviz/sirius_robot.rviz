@@ -12,7 +12,7 @@ Panels:
         - /Controller1/Local Costmap1/Position1
         - /PointCloud21/Topic1
         - /npc_odom_gt1/Shape1
-        - /Path2
+        - /Marker1/Topic1
       Splitter Ratio: 0.49878934025764465
     Tree Height: 819
   - Class: rviz_common/Selection
@@ -972,7 +972,7 @@ Visualization Manager:
       Buffer Length: 1
       Class: rviz_default_plugins/Path
       Color: 249; 240; 107
-      Enabled: true
+      Enabled: false
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
       Length: 0.30000001192092896
@@ -995,6 +995,19 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /robot_path
+      Value: false
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Marker
+      Namespaces:
+        robot_path_velocity: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_path_marker
       Value: true
   Enabled: true
   Global Options:
@@ -1045,7 +1058,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 70.50777435302734
+      Scale: 59.94709777832031
       Target Frame: sirius3/base_footprint
       Value: TopDownOrtho (rviz_default_plugins)
       X: 0
