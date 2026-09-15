@@ -15,7 +15,7 @@ Panels:
         - /npc_odom_gt1/Shape1
         - /Marker1/Topic1
       Splitter Ratio: 0.49878934025764465
-    Tree Height: 819
+    Tree Height: 439
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -26,6 +26,7 @@ Panels:
   - Class: rviz_common/Views
     Expanded:
       - /Current View1
+      - /TopDownOrtho2
     Name: Views
     Splitter Ratio: 0.5
   - Class: nav2_rviz_plugins/Navigation 2
@@ -285,8 +286,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 2.4370057582855225
-        Min Value: 0.0011692643165588379
+        Max Value: 7.200528144836426
+        Min Value: 0.0008869171142578125
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -1034,7 +1035,7 @@ Visualization Manager:
       Enabled: true
       Name: Marker
       Namespaces:
-        robot_path_velocity: true
+        {}
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -1118,7 +1119,7 @@ Visualization Manager:
       Name: Current View
       Near Clip Distance: 0.009999999776482582
       Scale: 76.48417663574219
-      Target Frame: map
+      Target Frame: sirius3/base_footprint
       Value: TopDownOrtho (rviz_default_plugins)
       X: 0.6319484114646912
       Y: -0.3133222758769989
@@ -1169,7 +1170,7 @@ Visualization Manager:
         Name: TopDownOrtho
         Near Clip Distance: 0.009999999776482582
         Scale: 76.48417663574219
-        Target Frame: map
+        Target Frame: sirius3/base_footprint
         Value: TopDownOrtho (rviz_default_plugins)
         X: 0.6319484114646912
         Y: -0.3133222758769989
