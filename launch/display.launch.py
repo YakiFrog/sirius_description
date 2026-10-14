@@ -76,6 +76,12 @@ def generate_launch_description():
         default_value='false',
         description='Start dummy joint_state_publisher (disable when using Unity/Gazebo)'
     )
+
+    rviz_arg = DeclareLaunchArgument(
+        'rviz',
+        default_value='true',
+        description='Start RViz2 (set false for headless/remote: TF only)'
+    )
     
     # Decide how to obtain robot_description (xacro URDF preferred, otherwise convert SDF)
     if os.path.exists(urdf_file_path):
@@ -128,13 +134,15 @@ def generate_launch_description():
         arguments=['-d', rviz_config_path] if os.path.exists(rviz_config_path) else [],
         parameters=[{
             'use_sim_time': LaunchConfiguration('use_sim_time')
-        }]
+        }],
+        condition=IfCondition(LaunchConfiguration('rviz'))
     )
     
     return LaunchDescription([
         use_sim_time_arg,
         use_gui_arg,
         use_dummy_joint_arg,
+        rviz_arg,
         robot_state_publisher,
         joint_state_publisher,
         # joint_state_publisher_gui,
